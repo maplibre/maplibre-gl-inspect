@@ -56,11 +56,11 @@
 
             function o(t) {
                 if (!(this instanceof o)) throw new Error("MaplibreInspect needs to be called with the new keyword");
-                var e, n = null;
-                window.maplibregl ? ((e = (e = window.maplibregl).version.split(".").map(parseFloat))[0] < 1 && e[1] < 29 && console.error("MaplibreInspect only supports Maplibre GL JS >= v0.29.0. Please upgrade your Maplibre GL JS version."), n = new window.maplibregl.Popup({
+                var e = null;
+                window.maplibregl ? e = new window.maplibregl.Popup({
                     closeButton: !1,
                     closeOnClick: !1
-                })) : t.popup || console.error("Maplibre GL JS can not be found. Make sure to include it or pass an initialized maplibregl Popup to MaplibreInspect if you are using moduleis."), this.options = Object.assign({
+                }) : t.popup || console.error("Maplibre GL JS can not be found. Make sure to include it or pass an initialized maplibregl Popup to MaplibreInspect if you are using moduleis."), this.options = Object.assign({
                     showInspectMap: !1,
                     showInspectButton: !0,
                     showInspectMapPopup: !0,
@@ -69,7 +69,7 @@
                     assignLayerColor: u.brightColor,
                     buildInspectStyle: i.generateInspectStyle,
                     renderPopup: c,
-                    popup: n
+                    popup: e
                 }, t), this.sources = {}, this.assignLayerColor = this.options.assignLayerColor, this.toggleInspector = this.toggleInspector.bind(this), this._popup = this.options.popup, this._showInspectMap = this.options.showInspectMap, this._onSourceChange = this._onSourceChange.bind(this), this._onMousemove = this._onMousemove.bind(this), this._onStyleChange = this._onStyleChange.bind(this), this._originalStyle = null, this._toggle = new a({
                     show: this.options.showInspectButton,
                     onToggle: this.toggleInspector.bind(this)
@@ -302,33 +302,32 @@
                             d = A;
                         u || (f = (f = wt(t)) == O ? B : f), p || (d = (d = wt(e)) == O ? B : d);
                         var y = f == B && !r(t);
-                        p = d == B && !r(e);
-                        return (d = f == d) && !y ? (c = c || new l, u || Mt(t) ? h(t, e, n, a, s, c) : function(t, e, n, r, a, s, c) {
-                            switch (n) {
-                                case J:
+                        return p = d == B && !r(e), (d = f == d) && !y ? (c = c || new l, u || It(t) ? h(t, e, n, a, s, c) : function(t, e, n, r, a, s, c) {
+                            switch (f) {
+                                case V:
                                     if (t.byteLength != e.byteLength || t.byteOffset != e.byteOffset) return !1;
                                     t = t.buffer, e = e.buffer;
                                 case G:
                                     return !(t.byteLength != e.byteLength || !r(new ut(t), new ut(e)));
-                                case L:
                                 case x:
+                                case L:
                                 case $:
                                     return _(+t, +e);
                                 case E:
                                     return t.name == e.name && t.message == e.message;
-                                case N:
+                                case F:
                                 case q:
                                     return t == e + "";
                                 case T:
                                     var u = o;
                                 case z:
                                     var l = s & k;
-                                    return u = u || i, t.size == e.size || l ? (l = c.get(t)) ? l == e : (s |= I, c.set(t, e), u = h(u(t), u(e), r, a, s, c), c.delete(t), u) : !1;
+                                    return u = u || i, !(t.size != e.size && !l) && ((l = c.get(t)) ? l == e : (s |= M, c.set(t, e), u = h(u(t), u(e), r, a, s, c), c.delete(t), u));
                                 case U:
                                     if (mt) return mt.call(t) == mt.call(e)
                             }
                             return !1
-                        }(t, e, f, n, a, s, c)) : s & k || (y = y && at.call(t, "__wrapped__"), p = p && at.call(e, "__wrapped__"), !y && !p) ? !!d && function(t, e, n, r, o, i) {
+                        }(t, e, 0, n, a, s, c)) : s & k || (y = y && at.call(t, "__wrapped__"), p = p && at.call(e, "__wrapped__"), !y && !p) ? !!d && function(t, e, n, r, o, i) {
                             var a = o & k,
                                 s = S(t),
                                 c = s.length,
@@ -351,7 +350,7 @@
                                 }
                                 d = d || "constructor" == p
                             }
-                            return h && !d && ((u = t.constructor) != (f = e.constructor) && "constructor" in t && "constructor" in e && !("function" == typeof u && u instanceof u && "function" == typeof f && f instanceof f) && (h = !1)), i.delete(t), i.delete(e), h
+                            return h && !d && (u = t.constructor) != (f = e.constructor) && "constructor" in t && "constructor" in e && !("function" == typeof u && u instanceof u && "function" == typeof f && f instanceof f) && (h = !1), i.delete(t), i.delete(e), h
                         }(t, e, n, a, s, c = c || new l) : n(y = y ? t.value() : t, p = p ? e.value() : e, a, s, c = c || new l)
                     }(t, e, f, n, a, s))
                 }
@@ -364,7 +363,7 @@
                     if ((c = i.get(t)) && i.get(e)) return c == e;
                     var l = -1,
                         p = !0,
-                        f = o & I ? new u : void 0;
+                        f = o & M ? new u : void 0;
                     for (i.set(t, e), i.set(e, t); ++l < s;) {
                         var h, d = t[l],
                             y = e[l];
@@ -399,7 +398,7 @@
                 function y(t, e) {
                     return e = e,
                         function(t) {
-                            return w(t) && !(ot && ot in t) && (v(t) || r(t) ? ct : V).test(g(t))
+                            return w(t) && !(ot && ot in t) && (v(t) || r(t) ? ct : W).test(g(t))
                         }(e = null == (t = t) ? void 0 : t[e]) ? e : void 0
                 }
 
@@ -450,7 +449,7 @@
                             }(t.length, String) : [],
                             s = a.length,
                             c = !!s;
-                        for (r in t) !e && !at.call(t, r) || c && ("length" == r || (o = r, (i = null == (i = s) ? C : i) && ("number" == typeof o || W.test(o)) && -1 < o && o % 1 == 0 && o < i)) || a.push(r);
+                        for (r in t) !e && !at.call(t, r) || c && ("length" == r || (o = r, (i = null == (i = s) ? C : i) && ("number" == typeof o || H.test(o)) && -1 < o && o % 1 == 0 && o < i)) || a.push(r);
                         return a
                     } : function(t) {
                         if (n = "function" == typeof(n = (e = t) && e.constructor) && n.prototype || rt, e !== n) return ft(t);
@@ -459,32 +458,32 @@
                         return o
                     })(t)
                 }
-                var M = "__lodash_hash_undefined__",
-                    I = 1,
+                var I = "__lodash_hash_undefined__",
+                    M = 1,
                     k = 2,
                     C = 9007199254740991,
                     O = "[object Arguments]",
                     A = "[object Array]",
-                    L = "[object Boolean]",
-                    x = "[object Date]",
+                    x = "[object Boolean]",
+                    L = "[object Date]",
                     E = "[object Error]",
                     P = "[object Function]",
                     R = "[object GeneratorFunction]",
                     T = "[object Map]",
                     $ = "[object Number]",
                     B = "[object Object]",
-                    F = "[object Promise]",
-                    N = "[object RegExp]",
+                    N = "[object Promise]",
+                    F = "[object RegExp]",
                     z = "[object Set]",
                     q = "[object String]",
                     U = "[object Symbol]",
                     D = "[object WeakMap]",
                     G = "[object ArrayBuffer]",
-                    J = "[object DataView]",
-                    V = /^\[object .+?Constructor\]$/,
-                    W = /^(?:0|[1-9]\d*)$/,
-                    H = {};
-                H["[object Float32Array]"] = H["[object Float64Array]"] = H["[object Int8Array]"] = H["[object Int16Array]"] = H["[object Int32Array]"] = H["[object Uint8Array]"] = H["[object Uint8ClampedArray]"] = H["[object Uint16Array]"] = H["[object Uint32Array]"] = !0, H[O] = H[A] = H[G] = H[L] = H[J] = H[x] = H[E] = H[P] = H[T] = H[$] = H[B] = H[N] = H[z] = H[q] = H[D] = !1;
+                    V = "[object DataView]",
+                    W = /^\[object .+?Constructor\]$/,
+                    H = /^(?:0|[1-9]\d*)$/,
+                    J = {};
+                J["[object Float32Array]"] = J["[object Float64Array]"] = J["[object Int8Array]"] = J["[object Int16Array]"] = J["[object Int32Array]"] = J["[object Uint8Array]"] = J["[object Uint8ClampedArray]"] = J["[object Uint16Array]"] = J["[object Uint32Array]"] = !0, J[O] = J[A] = J[G] = J[x] = J[V] = J[L] = J[E] = J[P] = J[T] = J[$] = J[B] = J[F] = J[z] = J[q] = J[D] = !1;
                 var X, K, Q = "object" == typeof t && t && t.Object === Object && t,
                     Y = "object" == typeof self && self && self.Object === Object && self,
                     Z = Q || Y || Function("return this")(),
@@ -523,14 +522,14 @@
                     var e = this.__data__;
                     if (dt) {
                         var n = e[t];
-                        return n === M ? void 0 : n
+                        return n === I ? void 0 : n
                     }
                     return at.call(e, t) ? e[t] : void 0
                 }, a.prototype.has = function(t) {
                     var e = this.__data__;
                     return dt ? void 0 !== e[t] : at.call(e, t)
                 }, a.prototype.set = function(t, e) {
-                    return this.__data__[t] = dt && void 0 === e ? M : e, this
+                    return this.__data__[t] = dt && void 0 === e ? I : e, this
                 }, s.prototype.clear = function() {
                     this.__data__ = []
                 }, s.prototype.delete = function(t) {
@@ -560,7 +559,7 @@
                 }, c.prototype.set = function(t, e) {
                     return d(this, t).set(t, e), this
                 }, u.prototype.add = u.prototype.push = function(t) {
-                    return this.__data__.set(t, M), this
+                    return this.__data__.set(t, I), this
                 }, u.prototype.has = function(t) {
                     return this.__data__.has(t)
                 }, l.prototype.clear = function() {
@@ -583,15 +582,15 @@
                 var wt = function(t) {
                     return st.call(t)
                 };
-                (t && wt(new t(new ArrayBuffer(1))) != J || ht && wt(new ht) != T || nt && wt(nt.resolve()) != F || et && wt(new et) != z || Z && wt(new Z) != D) && (wt = function(t) {
+                (t && wt(new t(new ArrayBuffer(1))) != V || ht && wt(new ht) != T || nt && wt(nt.resolve()) != N || et && wt(new et) != z || Z && wt(new Z) != D) && (wt = function(t) {
                     var e = st.call(t);
                     if (t = (t = e == B ? t.constructor : void 0) ? g(t) : void 0) switch (t) {
                         case yt:
-                            return J;
+                            return V;
                         case gt:
                             return T;
                         case _t:
-                            return F;
+                            return N;
                         case bt:
                             return z;
                         case vt:
@@ -600,10 +599,10 @@
                     return e
                 });
                 var jt, St = Array.isArray,
-                    Mt = Y ? (jt = Y, function(t) {
+                    It = Y ? (jt = Y, function(t) {
                         return jt(t)
                     }) : function(t) {
-                        return j(t) && m(t.length) && !!H[st.call(t)]
+                        return j(t) && m(t.length) && !!J[st.call(t)]
                     };
                 e.exports = function(t, e) {
                     return f(t, e)
@@ -705,8 +704,7 @@
                     if (null === u) return Math.floor(t[0] + Math.random() * (t[1] + 1 - t[0]));
                     var e = t[1] || 1,
                         n = t[0] || 0;
-                    t = (u = (9301 * u + 49297) % 233280) / 233280;
-                    return Math.floor(n + t * (e - n))
+                    return t = (u = (9301 * u + 49297) % 233280) / 233280, Math.floor(n + t * (e - n))
                 }
 
                 function a(t, e, n) {
@@ -758,8 +756,7 @@
                     var e = t[0],
                         n = t[1] / 100,
                         r = t[2] / 100;
-                    t = (2 - n) * r;
-                    return [e, Math.round(n * r / (t < 1 ? t : 2 - t) * 1e4) / 100, t / 2 * 100]
+                    return t = (2 - n) * r, [e, Math.round(n * r / (t < 1 ? t : 2 - t) * 1e4) / 100, t / 2 * 100]
                 }
                 var u = null,
                     l = {};
