@@ -8,6 +8,7 @@
     "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MaplibreInspect -o dist/maplibre-gl-inspect.js",
     "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --screw-ie8 --compress --mangle -o dist/maplibre-gl-inspect.min.js",
     "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --screw-ie8 -o dist/maplibre-gl-inspect.min.js",
+	"build-pretty": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | pretty-js > dist/maplibre-gl-inspect.js",
     "docs": "documentation build lib/MaplibreInspect.js --shallow --format=md > API.md"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "eslint": "^2.8.0",
     "eslint-config-mourner": "^2.0.1",
     "uglify-js": "^2.4.24",
+    "pretty-js": "^0.2.2",
     "watchify": "^3.8.0"
   },
   "peerDependencies": {
