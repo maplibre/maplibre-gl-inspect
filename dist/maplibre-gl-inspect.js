@@ -135,34 +135,6 @@
                     });
                 }
 
-                function fixRasterSource(source) {
-                    if (source.type === "raster" && source.tileSize && source.tiles) {
-                        return {
-                            type: source.type,
-                            tileSize: source.tileSize,
-                            tiles: source.tiles
-                        };
-                    }
-
-                    if (source.type === "raster" && source.url) {
-                        return {
-                            type: source.type,
-                            url: source.url
-                        };
-                    }
-
-                    return source;
-                }
-
-                //TODO: We can remove this at some point in the future
-                function fixStyle(style) {
-                    Object.keys(style.sources).forEach(function (sourceId) {
-                        style.sources[sourceId] = fixRasterSource(style.sources[sourceId]);
-                    });
-
-                    return style;
-                }
-
                 function MaplibreInspect(options) {
                     if (!(this instanceof MaplibreInspect)) {
                         throw new Error("MaplibreInspect needs to be called with the new keyword");
@@ -227,7 +199,7 @@
                 MaplibreInspect.prototype.render = function () {
                     if (this._showInspectMap) {
                         if (this.options.useInspectStyle) {
-                            this._map.setStyle(fixStyle(markInspectStyle(this._inspectStyle())));
+                            this._map.setStyle(markInspectStyle(this._inspectStyle()));
                         }
 
                         this._toggle.setMapIcon();
@@ -235,7 +207,7 @@
                         if (this._popup) this._popup.remove();
 
                         if (this.options.useInspectStyle) {
-                            this._map.setStyle(fixStyle(this._originalStyle));
+                            this._map.setStyle(this._originalStyle);
                         }
 
                         this._toggle.setInspectIcon();
