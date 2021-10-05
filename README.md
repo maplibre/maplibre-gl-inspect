@@ -16,8 +16,8 @@ Make sure to include the CSS and JS files.
 **When using a CDN**
 
 ```html
-<script src='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/maplibre-test/maplibre-gl-inspect.min.js'></script>
-<link href='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/maplibre-test/maplibre-gl-inspect.css' rel='stylesheet' />
+<script src='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/v1.4.0/maplibre-gl-inspect.min.js'></script>
+<link href='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/v1.4.0/maplibre-gl-inspect.css' rel='stylesheet' />
 ```
 
 **When using modules**
