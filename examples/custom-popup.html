@@ -6,8 +6,8 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js'></script>
     <link href='https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css' rel='stylesheet' />
-    <script src='/dist/maplibre-gl-inspect.js.js'></script>
-    <link href='/dist/maplibre-gl-inspect.js.css' rel='stylesheet' />
+    <script src='../dist/maplibre-gl-inspect.min.js'></script>
+    <link href='../dist/maplibre-gl-inspect.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -18,10 +18,10 @@
 <div id='map'></div>
 <script>
 var map = new maplibregl.Map({
-    container: 'map',
-    style: 'https://api.maptiler.com/maps/streets/style.json?key=GET-YOUR-OWN-KEY',
-    center: [-74.50, 40],
-    zoom: 3,
+    container: 'map', // container id
+	style: 'https://demotiles.maplibre.org/style.json', // style URL
+    center: [-74.50, 40], // starting position [lng, lat]
+    zoom: 3, // starting zoom
     hash: true
 });
 map.addControl(new maplibregl.NavigationControl());
