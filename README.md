@@ -3,7 +3,7 @@
 Add an inspect control to [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) to view all features
 of the vector sources and allows hovering over features to see their properties.
 
-**Requires [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) (version 1.14.0).**
+**Requires [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) (min version 1.15.1).**
 
 ![Mapbox GL Inspect Preview](https://cloud.githubusercontent.com/assets/1288339/21744637/11759412-d51a-11e6-9581-f26741fcd182.gif)
 
