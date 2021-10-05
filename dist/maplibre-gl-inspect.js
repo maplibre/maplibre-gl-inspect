@@ -156,9 +156,10 @@
                         showInspectButton: true,
                         showInspectMapPopup: true,
                         showMapPopup: false,
-                        showMapPopupOnHover: true,
-                        showInspectMapPopupOnHover: true,
+                        showMapPopupOnHover: false,
+                        showInspectMapPopupOnHover: false,
                         blockHoverPopupOnClick: false,
+                        keepInspectOnTileChange: false,
                         backgroundColor: "#fff",
                         assignLayerColor: colors.brightColor,
                         buildInspectStyle: stylegen.generateInspectStyle,
@@ -175,6 +176,7 @@
                     this._popup = this.options.popup;
                     this._popupBlocked = false;
                     this._showInspectMap = this.options.showInspectMap;
+                    this._keepInspectOnStyleChange = this.options.keepInspectOnTileChange;
                     this._onSourceChange = this._onSourceChange.bind(this);
                     this._onMousemove = this._onMousemove.bind(this);
                     this._onStyleChange = this._onStyleChange.bind(this);
@@ -239,7 +241,15 @@
 
                     if (!isInspectStyle(style)) {
                         this._originalStyle = style;
-                        this.render();
+
+                        if (this._showInspectMap && this._keepInspectOnStyleChange) {
+                            this.render();
+                        } else if (this._showInspectMap && !this._keepInspectOnStyleChange) {
+                            this._showInspectMap = !this._showInspectMap;
+                            this._toggle.setInspectIcon();
+
+                            if (this._popup) this._popup.remove();
+                        }
                     }
                 };
                 MaplibreInspect.prototype._onMousemove = function (e) {
