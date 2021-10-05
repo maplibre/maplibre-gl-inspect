@@ -1,6 +1,6 @@
 {
   "name": "maplibre-gl-inspect",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Maplibre GL JS plugin for inspecting vector data",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "leaflet",
     "gl"
   ],
-  "author": "Lukas Martinelli (Modifed for Maplibre by Andrew Calcutt)",
+  "author": "Andrew Calcutt (Forked form Mapbox GL Inspect by Lukas Martinelli)",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/acalcutt/maplibre-gl-inspect/issues"
