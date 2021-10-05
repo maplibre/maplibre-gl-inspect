@@ -315,11 +315,18 @@
                 };
                 MaplibreInspect.prototype.onAdd = function (map) {
                     this._map = map;
+
+                    // if sources have already been passed as options
+                    // we do not need to figure out the sources ourselves
+                    if (Object.keys(this.sources).length === 0) {
+                        map.on("tiledata", this._onSourceChange);
+                        map.on("sourcedata", this._onSourceChange);
+                    }
+
                     map.on("styledata", this._onStyleChange);
                     map.on("load", this._onStyleChange);
-                    map.on("tiledata", this._onSourceChange);
-                    map.on("sourcedata", this._onSourceChange);
                     map.on("mousemove", this._onMousemove);
+                    map.on("click", this._onMousemove);
 
                     return this._toggle.elem;
                 };
