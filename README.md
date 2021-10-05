@@ -154,7 +154,7 @@ Check [`examples/less-fidly.html`](http://maplibre-gl-inspect.lukasmartinelli.ch
 ```js
 map.addControl(new MaplibreInspect({
   selectThreshold: 50
-});
+}));
 ```
 
 ### Show Popup only on Click not on Hovering
@@ -168,7 +168,7 @@ map.addControl(new MaplibreInspect({
   showMapPopup: true,
   showMapPopupOnHover: false,
   showInspectMapPopupOnHover: false
-});
+}));
 ```
 
 ## Develop
