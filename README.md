@@ -1,4 +1,4 @@
-# Maplibre GL Inspect [![Build Status](https://travis-ci.org/lukasmartinelli/maplibre-gl-inspect.svg?branch=master)](https://travis-ci.org/lukasmartinelli/maplibre-gl-inspect)
+# Maplibre GL Inspect
 
 Add an inspect control to [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) to view all features
 of the vector sources and allows hovering over features to see their properties.
