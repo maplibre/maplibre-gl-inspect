@@ -7,6 +7,7 @@
     "test": "eslint lib && eslint index.js",
     "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MapboxInspect -o dist/mapbox-gl-inspect.js",
     "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MapboxInspect | uglifyjs - --screw-ie8 --compress --mangle -o dist/mapbox-gl-inspect.min.js",
+    "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MapboxInspect | uglifyjs - --screw-ie8 -o dist/mapbox-gl-inspect.min.js",
     "docs": "documentation build lib/MapboxInspect.js --shallow --format=md > API.md"
   },
   "repository": {
