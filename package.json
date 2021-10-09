@@ -1,21 +1,21 @@
 {
-  "name": "mapbox-gl-inspect",
+  "name": "maplibregl-inspect",
   "version": "1.3.1",
-  "description": "Mapbox GL JS plugin for inspecting vector data",
+  "description": "Maplibre GL JS plugin for inspecting vector data",
   "main": "index.js",
   "scripts": {
     "test": "eslint lib && eslint index.js",
-    "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MapboxInspect -o dist/mapbox-gl-inspect.js",
-    "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MapboxInspect | uglifyjs - --screw-ie8 --compress --mangle -o dist/mapbox-gl-inspect.min.js",
-    "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MapboxInspect | uglifyjs - --screw-ie8 -o dist/mapbox-gl-inspect.min.js",
-    "docs": "documentation build lib/MapboxInspect.js --shallow --format=md > API.md"
+    "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MaplibreInspect -o dist/maplibregl-inspect.js",
+    "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --screw-ie8 --compress --mangle -o dist/maplibre-gl-inspect.min.js",
+    "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --screw-ie8 -o dist/maplibre-gl-inspect.min.js",
+    "docs": "documentation build lib/MaplibreInspect.js --shallow --format=md > API.md"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukasmartinelli/mapbox-gl-inspect.git"
+    "url": "git+https://github.com/lukasmartinelli/maplibregl-inspect.git"
   },
   "keywords": [
-    "mapbox",
+    "maplibre",
     "gis",
     "vector",
     "leaflet",
@@ -24,9 +24,9 @@
   "author": "Lukas Martinelli",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/lukasmartinelli/mapbox-gl-inspect/issues"
+    "url": "https://github.com/lukasmartinelli/maplibregl-inspect/issues"
   },
-  "homepage": "https://github.com/lukasmartinelli/mapbox-gl-inspect#readme",
+  "homepage": "https://github.com/lukasmartinelli/maplibregl-inspect#readme",
   "dependencies": {
     "lodash.isequal": "^4.4.0",
     "randomcolor": "^0.4.4"
@@ -40,7 +40,7 @@
     "watchify": "^3.8.0"
   },
   "peerDependencies": {
-    "mapbox-gl": ">0.28.0"
+    "maplibregl": ">0.28.0"
   },
   "eslintConfig": {
     "parserOptions": {

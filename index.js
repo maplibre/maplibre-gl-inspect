@@ -1,2 +1,2 @@
-var MapboxInspect = require('./lib/MapboxInspect');
-module.exports = MapboxInspect;
+var MaplibreInspect = require('./lib/MaplibreInspect');
+module.exports = MaplibreInspect;
