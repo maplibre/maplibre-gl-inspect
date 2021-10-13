@@ -1,6 +1,6 @@
 {
   "name": "maplibre-gl-inspect",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Maplibre GL JS plugin for inspecting vector data",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,6 @@
     "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MaplibreInspect -o dist/maplibre-gl-inspect.js",
     "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect.min.js",
     "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - -o dist/maplibre-gl-inspect.min.js",
-    "build-pretty": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | pretty-js > dist/maplibre-gl-inspect.js",
     "docs": "documentation build lib/MaplibreInspect.js --shallow --format=md > API.md"
   },
   "repository": {
@@ -22,7 +21,7 @@
     "leaflet",
     "gl"
   ],
-  "author": "Lukas Martinelli (Modifed for Maplibre by Andrew Calcutt)",
+  "author": "Andrew Calcutt(Forked from mapbox-gl-inspect by Lukas Martinelli)",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/acalcutt/maplibre-gl-inspect/issues"
