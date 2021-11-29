@@ -8,6 +8,7 @@
     "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MaplibreInspect -o dist/maplibre-gl-inspect.js",
     "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect.min.js",
     "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - -o dist/maplibre-gl-inspect.min.js",
+    "build-ie": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-transform-object-assign ] ] | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect.ie.min.js",
     "docs": "documentation build lib/MaplibreInspect.js --shallow --format=md > API.md"
   },
   "repository": {
@@ -38,7 +39,12 @@
     "eslint-config-mourner": "^3.0.0",
     "uglify-js": "^3.14.2",
     "pretty-js": "^0.2.2",
-    "watchify": "^4.0.0"
+    "watchify": "^4.0.0",
+    "@babel/core": "^7.16.0",
+    "@babel/cli": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/plugin-transform-object-assign": "^7.16.0",
+    "babelify": "^10.0.0"
   },
   "peerDependencies": {
     "maplibre-gl": ">1.15.0"
