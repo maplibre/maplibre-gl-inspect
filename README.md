@@ -1,5 +1,7 @@
 # Maplibre GL Inspect
 
+Maplibre GL Inspect is a fork of Mapbox GL Inspect by lukasmartinelli ( https://github.com/lukasmartinelli/mapbox-gl-inspect ). It was forked to add support for maplibre-gl-js.
+
 Add an inspect control to [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) to view all features
 of the vector sources and allows hovering over features to see their properties.
 
