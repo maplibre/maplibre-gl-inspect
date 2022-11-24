@@ -173,6 +173,19 @@ map.addControl(new MaplibreInspect({
 }));
 ```
 
+### Add a Callback for Inspect Toggle Events
+
+Call a function whenever the user toggles the inpect map on or off. Useful for adding inspect state to URL hash.
+Check `examples/url-hash-toggle-callback.html`.
+
+```js
+map.addControl(new MaplibreInspect({
+  toggleCallback: function(showInspectMap) { 
+    console.log(`showInspectMap is ${showInspectMap}`);
+  }
+}));
+```
+
 ## Develop
 
 Run the linter and watch for changes to rebuild with browserify.
