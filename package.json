@@ -9,7 +9,7 @@
     "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect.min.js",
     "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - -o dist/maplibre-gl-inspect.min.js",
     "build-compat": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-transform-object-assign ] ] | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect-compat.min.js",
-    "docs": "documentation build lib/MaplibreInspect.js --shallow --format=md > API.md"
+    "docs": "documentation build lib/MaplibreInspect.js --format=md > API.md"
   },
   "repository": {
     "type": "git",
