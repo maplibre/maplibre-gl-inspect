@@ -33,18 +33,18 @@
     "randomcolor": "^0.6.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-transform-object-assign": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "babelify": "^10.0.0",
     "browserify": "^17.0.0",
-    "documentation": "^13.2.5",
+    "documentation": "^14.0.0",
     "eslint": "^7.32.0",
     "eslint-config-mourner": "^3.0.0",
-    "uglify-js": "^3.14.2",
     "pretty-js": "^0.2.2",
-    "watchify": "^4.0.0",
-    "@babel/core": "^7.16.0",
-    "@babel/cli": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
-    "@babel/plugin-transform-object-assign": "^7.16.0",
-    "babelify": "^10.0.0"
+    "uglify-js": "^3.14.2",
+    "watchify": "^4.0.0"
   },
   "peerDependencies": {
     "maplibre-gl": ">1.15.0"
