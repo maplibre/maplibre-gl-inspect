@@ -9,7 +9,7 @@ on:
 jobs:
   lint-build:
     name: Build and Lint
-    runs-on: upuntu-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v3
