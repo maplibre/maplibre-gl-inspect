@@ -58,8 +58,7 @@ jobs:
       - name: Install & build
         run: |
           npm ci
-          npm run build
-          npm run build-compat
+          npm run build-dist
 
       - name: Publish NPM package
         run: |
