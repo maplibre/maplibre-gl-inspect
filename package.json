@@ -1,6 +1,6 @@
 {
   "name": "@maplibre/maplibre-gl-inspect",
-  "version": "1.4.11",
+  "version": "1.4.12",
   "description": "Maplibre GL JS plugin for inspecting vector data",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/acalcutt/maplibre-gl-inspect.git"
+    "url": "git+https://github.com/maplibre/maplibre-gl-inspect.git"
   },
   "keywords": [
     "maplibre",
@@ -24,10 +24,14 @@
   ],
   "author": "Andrew Calcutt(Forked from mapbox-gl-inspect by Lukas Martinelli), Harel Mazor",
   "license": "BSD-3-Clause",
+  "files": [
+    "dist",
+    "lib"
+  ],
   "bugs": {
-    "url": "https://github.com/acalcutt/maplibre-gl-inspect/issues"
+    "url": "https://github.com/maplibre/maplibre-gl-inspect/issues"
   },
-  "homepage": "https://github.com/acalcutt/maplibre-gl-inspect#readme",
+  "homepage": "https://github.com/maplibre/maplibre-gl-inspect#readme",
   "dependencies": {
     "lodash.isequal": "^4.5.0",
     "randomcolor": "^0.6.2"
