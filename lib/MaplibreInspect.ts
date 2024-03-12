@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal';
 import stylegen from './stylegen';
 import InspectButton from './InspectButton';
-import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
+import renderPopup from './renderPopup';
 import colors from './colors';
 import type { IControl, LayerSpecification, Map, MapGeoJSONFeature, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
