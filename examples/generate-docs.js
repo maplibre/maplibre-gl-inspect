@@ -28,6 +28,7 @@ const index = `
 
 <H1>Maplibre GL Inspect Docs</H1>
 <H2><a href="API/index.html">API</a></H2>
+<H2>Examples</H2>
 <ul>
 ${files.map(f => '    <li><a href="' + f +'">' + f + '</a></li>').join('\n')}
 </body>
