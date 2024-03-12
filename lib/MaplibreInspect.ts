@@ -3,7 +3,7 @@ import stylegen from './stylegen';
 import InspectButton from './InspectButton';
 import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
 import colors from './colors';
-import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
+import type { IControl, LayerSpecification, Map, MapGeoJSONFeature, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
 type InspectStyleSpecification = StyleSpecification & { metadata: { 'maplibregl-inspect:inspect': boolean } };
 
@@ -22,7 +22,7 @@ function markInspectStyle(style: StyleSpecification) {
 /** 
  * This is the main type for the available options for MapLibre Inspect
  */
-type MaplibreInspectOptions = {
+export type MaplibreInspectOptions = {
   /**
    * Show the inspect map
    * @default false
@@ -65,7 +65,7 @@ type MaplibreInspectOptions = {
   backgroundColor: string;
   assignLayerColor: (layerId: string, alpha: number) => string;
   buildInspectStyle: (originalMapStyle: StyleSpecification, coloredLayers: LayerSpecification[], opts: {backgroundColor?: string}) => StyleSpecification;
-  renderPopup: (features: GeoJSONFeatureWithSourceLayer[]) => string | HTMLElement;
+  renderPopup: (features: MapGeoJSONFeature[]) => string | HTMLElement;
   /**
    * Maplibre GL Popup
    */
@@ -101,11 +101,29 @@ class MaplibreInspect implements IControl {
   options: MaplibreInspectOptions;
   sources: {[key: string]: string[]};
   assignLayerColor: (layerId: string, alpha: number) => string;
+  /**
+   * @hidden
+   */
   _popup: Popup;
+  /**
+   * @hidden
+   */
   _popupBlocked: boolean;
+  /**
+   * @hidden
+   */
   _showInspectMap: boolean;
+  /**
+   * @hidden
+   */
   _originalStyle: StyleSpecification | undefined;
+  /**
+   * @hidden
+   */
   _toggle: InspectButton;
+  /**
+   * @hidden
+   */
   _map: Map | undefined;
 
   constructor(options: MaplibreInspectOptions) {

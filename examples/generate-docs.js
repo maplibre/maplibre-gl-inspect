@@ -7,9 +7,6 @@ import fs from 'fs';
  */
 
 const files = fs.readdirSync('./examples');
-if (!fs.existsSync('./docs')) {
-    fs.mkdirSync('./docs');
-}
 
 for (const file of files) {
     if (file.endsWith('.html')) {
@@ -30,6 +27,7 @@ const index = `
 <body>
 
 <H1>Maplibre GL Inspect Docs</H1>
+<H2><a href="API/index.html">API</a></H2>
 <ul>
 ${files.map(f => '    <li><a href="' + f +'">' + f + '</a></li>').join('\n')}
 </body>

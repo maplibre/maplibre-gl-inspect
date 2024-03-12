@@ -1,2 +1,3 @@
-import MaplibreInspect from './lib/MaplibreInspect';
+import MaplibreInspect, {type MaplibreInspectOptions} from './lib/MaplibreInspect';
 export default MaplibreInspect;
+export type {MaplibreInspectOptions};

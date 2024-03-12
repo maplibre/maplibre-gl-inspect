@@ -1,8 +1,14 @@
+/**
+ * The options for the InspectButton
+ */
 type InspectButtonOptions = {
   show: boolean;
   onToggle: () => void;
 };
 
+/**
+ * A button to toggle the inspect mode
+ */
 class InspectButton {
   _btn: HTMLButtonElement;
   elem: HTMLDivElement;
