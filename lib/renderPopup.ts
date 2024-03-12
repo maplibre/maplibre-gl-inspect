@@ -1,6 +1,6 @@
-import type { GeoJSONFeature } from "maplibre-gl";
+import type { MapGeoJSONFeature } from "maplibre-gl";
 
-type GeoJSONFeatureWithLayer = GeoJSONFeature & { layer: any };
+type GeoJSONFeatureWithLayer = MapGeoJSONFeature & { layer: any };
 
 function displayValue(value: any) {
   if (typeof value === 'undefined' || value === null) return value;
