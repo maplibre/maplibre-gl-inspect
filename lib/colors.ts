@@ -1,4 +1,4 @@
-const randomColor = require('randomcolor');
+import randomColor from 'randomcolor';
 
 /**
  * Assign a color to a unique layer ID and also considering
@@ -6,7 +6,7 @@ const randomColor = require('randomcolor');
  * @param {string} layerId
  * @return {string} Unique random for the layer ID
  */
-function brightColor(layerId, alpha) {
+function brightColor(layerId: string, alpha: string) {
   let luminosity = 'bright';
   let hue = null;
 
@@ -53,4 +53,4 @@ function brightColor(layerId, alpha) {
   return `rgba(${  rgba.join(', ')  })`;
 }
 
-exports.brightColor = brightColor;
+export default brightColor;

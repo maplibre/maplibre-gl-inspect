@@ -1,14 +1,15 @@
-const stylegen = require('./stylegen');
-const InspectButton = require('./InspectButton');
-const isEqual = require('lodash.isequal');
-const renderPopup = require('./renderPopup');
-const colors = require('./colors');
+import isEqual from 'lodash.isequal';
+import stylegen from './stylegen';
+import InspectButton from './InspectButton';
+import renderPopup from './renderPopup';
+import colors from './colors';
+import type { StyleSpecification } from 'maplibre-gl';
 
-function isInspectStyle(style) {
-  return style.metadata && style.metadata['maplibregl-inspect:inspect'];
+function isInspectStyle(style: StyleSpecification) {
+  return style.metadata && (style.metadata as any)['maplibregl-inspect:inspect'];
 }
 
-function markInspectStyle(style) {
+function markInspectStyle(style: StyleSpecification) {
   return Object.assign(style, {
     metadata: Object.assign({}, style.metadata, {
       'maplibregl-inspect:inspect': true
@@ -16,58 +17,60 @@ function markInspectStyle(style) {
   });
 }
 
-function MaplibreInspect(options) {
-  if (!(this instanceof MaplibreInspect)) {
-    throw new Error('MaplibreInspect needs to be called with the new keyword');
-  }
+class MaplibreInspect {
+  options: any;
+  constructor(options: any) {
+    if (!(this instanceof MaplibreInspect)) {
+      throw new Error('MaplibreInspect needs to be called with the new keyword');
+    }
 
-  let popup = null;
-  if (window.maplibregl) {
-    popup = new window.maplibregl.Popup({
-      closeButton: false,
-      closeOnClick: false
+    let popup = null;
+    if (window.maplibregl) {
+      popup = new window.maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+    } else if (!options.popup) {
+      console.error('Maplibre GL JS can not be found. Make sure to include it or pass an initialized MaplibreGL Popup to MaplibreInspect if you are using moduleis.');
+    }
+
+    this.options = Object.assign({
+      showInspectMap: false,
+      showInspectButton: true,
+      showInspectMapPopup: true,
+      showMapPopup: false,
+      showMapPopupOnHover: true,
+      showInspectMapPopupOnHover: true,
+      blockHoverPopupOnClick: false,
+      backgroundColor: '#fff',
+      assignLayerColor: colors.brightColor,
+      buildInspectStyle: stylegen.generateInspectStyle,
+      renderPopup,
+      popup,
+      selectThreshold: 5,
+      useInspectStyle: true,
+      queryParameters: {},
+      sources: {},
+      toggleCallback() {}
+    }, options);
+
+    this.sources = this.options.sources;
+    this.assignLayerColor = this.options.assignLayerColor;
+    this.toggleInspector = this.toggleInspector.bind(this);
+    this._popup = this.options.popup;
+    this._popupBlocked = false;
+    this._showInspectMap = this.options.showInspectMap;
+    this._onSourceChange = this._onSourceChange.bind(this);
+    this._onMousemove = this._onMousemove.bind(this);
+    this._onRightClick = this._onRightClick.bind(this);
+    this._onStyleChange = this._onStyleChange.bind(this);
+
+    this._originalStyle = null;
+    this._toggle = new InspectButton({
+      show: this.options.showInspectButton,
+      onToggle: this.toggleInspector.bind(this)
     });
-  } else if (!options.popup) {
-    console.error('Maplibre GL JS can not be found. Make sure to include it or pass an initialized MaplibreGL Popup to MaplibreInspect if you are using moduleis.');
   }
-
-  this.options = Object.assign({
-    showInspectMap: false,
-    showInspectButton: true,
-    showInspectMapPopup: true,
-    showMapPopup: false,
-    showMapPopupOnHover: true,
-    showInspectMapPopupOnHover: true,
-    blockHoverPopupOnClick: false,
-    backgroundColor: '#fff',
-    assignLayerColor: colors.brightColor,
-    buildInspectStyle: stylegen.generateInspectStyle,
-    renderPopup,
-    popup,
-    selectThreshold: 5,
-    useInspectStyle: true,
-    queryParameters: {},
-    sources: {},
-    toggleCallback() {}
-  }, options);
-
-  this.sources = this.options.sources;
-  this.assignLayerColor = this.options.assignLayerColor;
-  this.toggleInspector = this.toggleInspector.bind(this);
-  this._popup = this.options.popup;
-  this._popupBlocked = false;
-  this._showInspectMap = this.options.showInspectMap;
-  this._onSourceChange = this._onSourceChange.bind(this);
-  this._onMousemove = this._onMousemove.bind(this);
-  this._onRightClick = this._onRightClick.bind(this);
-  this._onStyleChange = this._onStyleChange.bind(this);
-
-  this._originalStyle = null;
-  this._toggle = new InspectButton({
-    show: this.options.showInspectButton,
-    onToggle: this.toggleInspector.bind(this)
-  });
-}
 
 MaplibreInspect.prototype.toggleInspector = function () {
   this._showInspectMap = !this._showInspectMap;
@@ -226,5 +229,5 @@ MaplibreInspect.prototype.onRemove = function () {
   elem.parentNode.removeChild(elem);
   this._map = undefined;
 };
-
-module.exports = MaplibreInspect;
+}
+export default MaplibreInspect;

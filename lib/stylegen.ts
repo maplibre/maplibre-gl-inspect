@@ -1,4 +1,4 @@
-function circleLayer(color, source, vectorLayer) {
+function circleLayer(color: string, source: string, vectorLayer: string) {
   const layer = {
     id: [source, vectorLayer, 'circle'].join('_'),
     source,
@@ -60,12 +60,12 @@ function lineLayer(color, source, vectorLayer) {
  * @param {Function} Function to generate a color for a layer
  * @return {array} Array of Maplibre GL layers
  */
-function generateColoredLayers(sources, assignLayerColor) {
+function generateColoredLayers(sources: any, assignLayerColor) {
   const polyLayers = [];
   const circleLayers = [];
   const lineLayers = [];
 
-  function alphaColors(layerId) {
+  function alphaColors(layerId: string) {
     const color = assignLayerColor.bind(null, layerId);
     const obj = {
       circle: color(0.8),
@@ -86,7 +86,7 @@ function generateColoredLayers(sources, assignLayerColor) {
       lineLayers.push(lineLayer(colors.line, sourceId));
       polyLayers.push(polygonLayer(colors.polygon, colors.polygonOutline, sourceId));
     } else {
-      layers.forEach((layerId) => {
+      layers.forEach((layerId: string) => {
         const colors = alphaColors(layerId);
 
         circleLayers.push(circleLayer(colors.circle, sourceId, layerId));
@@ -132,8 +132,10 @@ function generateInspectStyle(originalMapStyle, coloredLayers, opts) {
   });
 }
 
-exports.polygonLayer = polygonLayer;
-exports.lineLayer = lineLayer;
-exports.circleLayer = circleLayer;
-exports.generateInspectStyle = generateInspectStyle;
-exports.generateColoredLayers = generateColoredLayers;
+export default {
+  polygonLayer,
+  lineLayer,
+  circleLayer,
+  generateInspectStyle,
+  generateColoredLayers
+}
