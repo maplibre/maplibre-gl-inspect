@@ -1,5 +1,11 @@
 import fs from 'fs';
 
+/**
+ * This script is used to generate the docs for the examples.
+ * It reads the examples folder and replaces the relative paths to the maplibre-gl-inspect library with the unpkg url.
+ * It also creates an index.html file with links to all the examples.
+ */
+
 const files = fs.readdirSync('./examples');
 if (!fs.existsSync('./docs')) {
     fs.mkdirSync('./docs');
