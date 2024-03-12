@@ -47,7 +47,7 @@ function brightColor(layerId: string, alpha: string) {
     hue,
     seed: layerId,
     format: 'rgbArray'
-  }) as any as string[];
+  }) as unknown as string[];
 
   return `rgba(${rgb.join(', ')}, ${alpha || "1"})`;
 }

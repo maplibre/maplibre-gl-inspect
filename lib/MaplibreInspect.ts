@@ -1,12 +1,14 @@
 import isEqual from 'lodash.isequal';
 import stylegen from './stylegen';
 import InspectButton from './InspectButton';
-import renderPopup from './renderPopup';
+import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
 import colors from './colors';
-import type { IControl, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, StyleSpecification } from 'maplibre-gl';
+import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
-function isInspectStyle(style: StyleSpecification) {
-  return style.metadata && (style.metadata as any)['maplibregl-inspect:inspect'];
+type InspectStyleSpecification = StyleSpecification & { metadata: { 'maplibregl-inspect:inspect': boolean } };
+
+function isInspectStyle(style: InspectStyleSpecification) {
+  return style.metadata && style.metadata['maplibregl-inspect:inspect'];
 }
 
 function markInspectStyle(style: StyleSpecification) {
@@ -17,8 +19,86 @@ function markInspectStyle(style: StyleSpecification) {
   });
 }
 
+/** 
+ * This is the main type for the available options for MapLibre Inspect
+ */
+type MaplibreInspectOptions = {
+  /**
+   * Show the inspect map
+   * @default false
+   */
+  showInspectMap: boolean;
+  /**
+   * Show the inspect button
+   * @default true
+   */
+  showInspectButton: boolean;
+  /**
+   * Show the map popup
+   * @default false
+   */
+  showMapPopup: boolean;
+  /**
+   * Show the map popup on hover
+   * @default true
+   */
+  showMapPopupOnHover: boolean;
+  /**
+   * Show the inspect map popup
+   * @default true
+   */
+  showInspectMapPopup: boolean;
+  /**
+   * Show the inspect map popup on hover
+   * @default true
+   */
+  showInspectMapPopupOnHover: boolean;
+  /**
+   * Block hover popup on click
+   * @default false
+   */
+  blockHoverPopupOnClick: boolean;
+  /**
+   * Background color for the inspect map
+   * @default '#fff'
+   */
+  backgroundColor: string;
+  assignLayerColor: (layerId: string, alpha: number) => string;
+  buildInspectStyle: (originalMapStyle: StyleSpecification, coloredLayers: LayerSpecification[], opts: {backgroundColor?: string}) => StyleSpecification;
+  renderPopup: (features: GeoJSONFeatureWithSourceLayer[]) => string | HTMLElement;
+  /**
+   * Maplibre GL Popup
+   */
+  popup: Popup;
+  /**
+   * Select threshold
+   * @default 5
+   */
+  selectThreshold: number;
+  /**
+   * Use inspect style
+   * @default true
+   */
+  useInspectStyle: boolean;
+  /**
+   * Query parameters for querying rendered features
+   */
+  queryParameters: QueryRenderedFeaturesOptions;
+  /**
+   * Sources
+   */
+  sources: {[key: string]: string[]};
+  /**
+   * Callback for toggling the inspect map
+   */
+  toggleCallback: (showInspectMap: boolean) => void;
+};
+
+/**
+ * Maplibre Inspect Control
+ */
 class MaplibreInspect implements IControl {
-  options: any;
+  options: MaplibreInspectOptions;
   sources: {[key: string]: string[]};
   assignLayerColor: (layerId: string, alpha: number) => string;
   _popup: Popup;
@@ -28,7 +108,7 @@ class MaplibreInspect implements IControl {
   _toggle: InspectButton;
   _map: Map | undefined;
 
-  constructor(options: any) {
+  constructor(options: MaplibreInspectOptions) {
     if (!(this instanceof MaplibreInspect)) {
       throw new Error('MaplibreInspect needs to be called with the new keyword');
     }
@@ -79,14 +159,14 @@ class MaplibreInspect implements IControl {
     this._showInspectMap = !this._showInspectMap;
     this.options.toggleCallback(this._showInspectMap);
     this.render();
-  };
+  }
 
   public _inspectStyle() {
     const coloredLayers = stylegen.generateColoredLayers(this.sources, this.assignLayerColor);
     return this.options.buildInspectStyle(this._map!.getStyle(), coloredLayers, {
       backgroundColor: this.options.backgroundColor
     });
-  };
+  }
 
   public render() {
     if (this._showInspectMap) {
@@ -101,7 +181,7 @@ class MaplibreInspect implements IControl {
       }
       this._toggle.setInspectIcon();
     }
-  };
+  }
 
   public _onSourceChange = (e: MapSourceDataEvent) => {
     const sources = this.sources;
@@ -137,7 +217,7 @@ class MaplibreInspect implements IControl {
 
   public _onStyleChange = () => {
     const style = this._map!.getStyle();
-    if (!isInspectStyle(style)) {
+    if (!isInspectStyle(style as InspectStyleSpecification)) {
       this._originalStyle = style;
     }
   };
@@ -217,7 +297,7 @@ class MaplibreInspect implements IControl {
     map.on('click', this._onMousemove);
     map.on('contextmenu', this._onRightClick);
     return this._toggle.elem;
-  };
+  }
 
   public onRemove() {
     this._map!.off('styledata', this._onStyleChange);
@@ -231,6 +311,6 @@ class MaplibreInspect implements IControl {
     const elem = this._toggle.elem;
     elem.parentNode!.removeChild(elem);
     this._map = undefined;
-  };
+  }
 }
 export default MaplibreInspect;

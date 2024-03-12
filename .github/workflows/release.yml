@@ -95,5 +95,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist
+          publish_dir: docs
           commit_message: 'deploy docs: ${{ steps.tag_version.outputs.new_tag }}'

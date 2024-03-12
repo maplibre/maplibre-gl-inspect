@@ -1,8 +1,13 @@
+type InspectButtonOptions = {
+  show: boolean;
+  onToggle: () => void;
+};
+
 class InspectButton {
   _btn: HTMLButtonElement;
   elem: HTMLDivElement;
 
-  constructor(options: any) {
+  constructor(options: InspectButtonOptions) {
     options = Object.assign({
       show: true,
       onToggle() {}
@@ -33,10 +38,10 @@ class InspectButton {
 
   public setInspectIcon() {
     this._btn.className = 'maplibregl-ctrl-icon maplibregl-ctrl-inspect';
-  };
+  }
 
   public setMapIcon() {
     this._btn.className = 'maplibregl-ctrl-icon maplibregl-ctrl-map';
-  };
+  }
 }
 export default InspectButton;

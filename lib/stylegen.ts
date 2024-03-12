@@ -17,7 +17,7 @@ function circleLayer(color: string, source: string, vectorLayer?: string) {
   return layer;
 }
 
-function polygonLayer(color: string, _outlineColor: any, source: string, vectorLayer?: string) {
+function polygonLayer(color: string, _outlineColor: string, source: string, vectorLayer?: string) {
   const layer: LayerSpecification = {
     id: [source, vectorLayer, 'polygon'].join('_'),
     source,

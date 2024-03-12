@@ -2,16 +2,17 @@
   "name": "@maplibre/maplibre-gl-inspect",
   "version": "1.4.13",
   "description": "Maplibre GL JS plugin for inspecting vector data",
-  "main": "index.js",
+  "main": "dist/maplibre-gl-inspect.js",
+  "module": "dist/maplibre-gl-inspect.mjs",
+  "typings": "dist/maplibre-gl-inspect.d.ts",
+  "type": "module",
   "scripts": {
-    "lint": "eslint lib index.js",
-    "watch": "mkdir -p dist && watchify index.js --debug -v --standalone MaplibreInspect -o dist/maplibre-gl-inspect.js",
-    "build": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect.min.js",
-    "build-nice": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect | uglifyjs - -o dist/maplibre-gl-inspect.min.js",
-    "build-compat": "mkdir -p dist && NODE_ENV=production browserify index.js --standalone MaplibreInspect -t [ babelify --presets [ @babel/preset-env ] --plugins [ @babel/plugin-transform-object-assign ] ] | uglifyjs - --compress --mangle -o dist/maplibre-gl-inspect-compat.min.js",
+    "lint": "eslint lib index.ts",
+    "watch": "rollup --configPlugin @rollup/plugin-typescript -c --watch",
+    "build": "rollup --configPlugin @rollup/plugin-typescript -c",
     "build-css": "mkdir -p dist && cp index.css dist/maplibre-gl-inspect.css",
-    "build-dist": "npm run build && npm run build-compat && npm run build-css",
-    "docs": "documentation build lib/MaplibreInspect.js --format=md > API.md && cp index.html ./dist"
+    "build-dist": "npm run build && npm run build-css",
+    "docs": "node ./examples/generate-docs.js"
   },
   "repository": {
     "type": "git",
@@ -39,38 +40,17 @@
     "randomcolor": "^0.6.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-object-assign": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/lodash.isequal": "^4.5.8",
     "@types/randomcolor": "^0.5.9",
-    "babelify": "^10.0.0",
-    "browserify": "^17.0.0",
-    "documentation": "^14.0.0",
-    "eslint": "^7.32.0",
-    "eslint-config-mourner": "^3.0.0",
-    "pretty-js": "^0.2.2",
+    "eslint": "^8.57.0",
+    "rollup": "^4.13.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "tslib": "^2.6.2",
     "typescript": "^5.4.2",
-    "uglify-js": "^3.14.2",
-    "watchify": "^4.0.0"
+    "typescript-eslint": "^7.2.0"
   },
   "peerDependencies": {
     "maplibre-gl": ">3.0.0"
-  },
-  "eslintConfig": {
-    "parserOptions": {
-      "sourceType": "module"
-    },
-    "env": {
-      "browser": true
-    },
-    "extends": "mourner",
-    "rules": {
-      "indent": [
-        2,
-        2
-      ]
-    }
   }
 }

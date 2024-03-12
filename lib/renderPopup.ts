@@ -1,8 +1,8 @@
 import type { MapGeoJSONFeature } from "maplibre-gl";
 
-type GeoJSONFeatureWithLayer = MapGeoJSONFeature & { layer: any };
+export type GeoJSONFeatureWithSourceLayer = MapGeoJSONFeature & { layer: {'source-layer'?: string} };
 
-function displayValue(value: any) {
+function displayValue(value: unknown) {
   if (typeof value === 'undefined' || value === null) return value;
   if (value instanceof Date) return value.toLocaleString();
   if (typeof value === 'object' ||
@@ -11,7 +11,7 @@ function displayValue(value: any) {
   return value;
 }
 
-function renderProperty(propertyName: string, property: any) {
+function renderProperty(propertyName: string, property: unknown) {
   return `${'<div class="maplibregl-inspect_property">' +
     '<div class="maplibregl-inspect_property-name">'}${  propertyName  }</div>` +
     `<div class="maplibregl-inspect_property-value">${  displayValue(property)  }</div>` +
@@ -22,18 +22,18 @@ function renderLayer(layerId: string) {
   return `<div class="maplibregl-inspect_layer">${layerId}</div>`;
 }
 
-function renderProperties(feature: GeoJSONFeatureWithLayer) {
+function renderProperties(feature: GeoJSONFeatureWithSourceLayer) {
   const sourceProperty = renderLayer(feature.layer['source-layer'] || feature.layer.source);
   const typeProperty = renderProperty('$type', feature.geometry.type);
   const properties = Object.keys(feature.properties).map(propertyName => renderProperty(propertyName, feature.properties[propertyName]));
   return [sourceProperty, typeProperty].concat(properties).join('');
 }
 
-function renderFeatures(features: GeoJSONFeatureWithLayer[]) {
+function renderFeatures(features: GeoJSONFeatureWithSourceLayer[]) {
   return features.map(ft => `<div class="maplibregl-inspect_feature">${renderProperties(ft)}</div>`).join('');
 }
 
-function renderPopup(features: GeoJSONFeatureWithLayer[]) {
+function renderPopup(features: GeoJSONFeatureWithSourceLayer[]) {
   return `<div class="maplibregl-inspect_popup">${renderFeatures(features)}</div>`;
 }
 
