@@ -1,5 +1,8 @@
 import type { MapGeoJSONFeature } from "maplibre-gl";
 
+/**
+ * A GeoJSON feature with a source layer
+ */
 export type GeoJSONFeatureWithSourceLayer = MapGeoJSONFeature & { layer: {'source-layer'?: string} };
 
 function displayValue(value: unknown) {
@@ -13,8 +16,8 @@ function displayValue(value: unknown) {
 
 function renderProperty(propertyName: string, property: unknown) {
   return `${'<div class="maplibregl-inspect_property">' +
-    '<div class="maplibregl-inspect_property-name">'}${  propertyName  }</div>` +
-    `<div class="maplibregl-inspect_property-value">${  displayValue(property)  }</div>` +
+    '<div class="maplibregl-inspect_property-name">'}${propertyName}</div>` +
+    `<div class="maplibregl-inspect_property-value">${displayValue(property)}</div>` +
     '</div>';
 }
 

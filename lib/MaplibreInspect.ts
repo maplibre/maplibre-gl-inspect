@@ -1,9 +1,9 @@
 import isEqual from 'lodash.isequal';
 import stylegen from './stylegen';
 import InspectButton from './InspectButton';
-import renderPopup from './renderPopup';
+import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
 import colors from './colors';
-import type { IControl, LayerSpecification, Map, MapGeoJSONFeature, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
+import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
 type InspectStyleSpecification = StyleSpecification & { metadata: { 'maplibregl-inspect:inspect': boolean } };
 
@@ -27,78 +27,78 @@ export type MaplibreInspectOptions = {
    * Show the inspect map
    * @default false
    */
-  showInspectMap: boolean;
+  showInspectMap?: boolean;
   /**
    * Show the inspect button
    * @default true
    */
-  showInspectButton: boolean;
+  showInspectButton?: boolean;
   /**
    * Show the map popup
    * @default false
    */
-  showMapPopup: boolean;
+  showMapPopup?: boolean;
   /**
    * Show the map popup on hover
    * @default true
    */
-  showMapPopupOnHover: boolean;
+  showMapPopupOnHover?: boolean;
   /**
    * Show the inspect map popup
    * @default true
    */
-  showInspectMapPopup: boolean;
+  showInspectMapPopup?: boolean;
   /**
    * Show the inspect map popup on hover
    * @default true
    */
-  showInspectMapPopupOnHover: boolean;
+  showInspectMapPopupOnHover?: boolean;
   /**
    * Block hover popup on click
    * @default false
    */
-  blockHoverPopupOnClick: boolean;
+  blockHoverPopupOnClick?: boolean;
   /**
    * Background color for the inspect map
    * @default '#fff'
    */
-  backgroundColor: string;
-  assignLayerColor: (layerId: string, alpha: number) => string;
-  buildInspectStyle: (originalMapStyle: StyleSpecification, coloredLayers: LayerSpecification[], opts: {backgroundColor?: string}) => StyleSpecification;
-  renderPopup: (features: MapGeoJSONFeature[]) => string | HTMLElement;
+  backgroundColor?: string;
+  assignLayerColor?: (layerId: string, alpha: number) => string;
+  buildInspectStyle?: (originalMapStyle: StyleSpecification, coloredLayers: LayerSpecification[], opts: {backgroundColor?: string}) => StyleSpecification;
+  renderPopup?: (features: GeoJSONFeatureWithSourceLayer[]) => string | HTMLElement;
   /**
    * Maplibre GL Popup
    */
-  popup: Popup;
+  popup?: Popup;
   /**
    * Select threshold
    * @default 5
    */
-  selectThreshold: number;
+  selectThreshold?: number;
   /**
    * Use inspect style
    * @default true
    */
-  useInspectStyle: boolean;
+  useInspectStyle?: boolean;
   /**
    * Query parameters for querying rendered features
    */
-  queryParameters: QueryRenderedFeaturesOptions;
+  queryParameters?: QueryRenderedFeaturesOptions;
   /**
    * Sources
    */
-  sources: {[key: string]: string[]};
+  sources?: {[key: string]: string[]};
   /**
    * Callback for toggling the inspect map
    */
-  toggleCallback: (showInspectMap: boolean) => void;
+  toggleCallback?: (showInspectMap: boolean) => void;
 };
 
 /**
  * Maplibre Inspect Control
  */
 class MaplibreInspect implements IControl {
-  options: MaplibreInspectOptions;
+  options: Required<MaplibreInspectOptions>;
   sources: {[key: string]: string[]};
   assignLayerColor: (layerId: string, alpha: number) => string;
   /**
