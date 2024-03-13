@@ -81,8 +81,7 @@ jobs:
         with:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: ${{ steps.tag_version.outputs.new_tag }}
-          artifacts: "dist.zip"
-          artifactContentType: "application/zip"
+          body: ${{ steps.tag_version.outputs.changelog }}
           allowUpdates: true
           draft: false
           prerelease: false
