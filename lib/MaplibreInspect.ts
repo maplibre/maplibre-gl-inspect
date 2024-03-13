@@ -1,5 +1,4 @@
 import isEqual from 'lodash.isequal';
-import throttle from 'lodash.throttle';
 import stylegen from './stylegen';
 import InspectButton from './InspectButton';
 import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
@@ -190,7 +189,7 @@ class MaplibreInspect implements IControl {
     });
   }
 
-  public render = () => {
+  public render() {
     if (this._showInspectMap) {
       if (this.options.useInspectStyle) {
         this._map!.setStyle(markInspectStyle(this._inspectStyle()));
@@ -234,7 +233,8 @@ class MaplibreInspect implements IControl {
     this._setSourcesFromMap();
 
     if (!isEqual(previousSources, this.sources) && Object.keys(this.sources).length > 0) {
-      throttle(this.render, 500, {trailing: true});
+      // If the sources have changed, we need to re-render the inspect style but not too fast
+      setTimeout(() => this.render(), 1000);
     }
   };
 
