@@ -1,36 +1,32 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Maplibre GL Inspect</title>
+    <title>Maplibre GL Inspect Docs</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
-    <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
-    <script src='./maplibre-gl-inspect.min.js'></script>
-    <link href='./maplibre-gl-inspect.css' rel='stylesheet' />
-    <base href="maplibre-gl-inspect" />
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
 </head>
 <body>
 
-<div id='map'></div>
-<script>
-var map = new maplibregl.Map({
-    container: 'map', // container id
-	style: 'https://demotiles.maplibre.org/style.json', // style URL
-    center: [-74.50, 40], // starting position [lng, lat]
-    zoom: 3, // starting zoom
-    hash: true
-});
-
-map.addControl(new maplibregl.NavigationControl());
-map.addControl(new MaplibreInspect({
-  showInspectMap: true
-}));
-</script>
-
+<H1>Maplibre GL Inspect Docs</H1>
+<H2><a href="API/index.html">API</a></H2>
+<H2>Examples</H2>
+<ul>
+    <li><a href="custom-color-1.html">custom-color-1.html</a></li>
+    <li><a href="custom-color-2.html">custom-color-2.html</a></li>
+    <li><a href="custom-popup.html">custom-popup.html</a></li>
+    <li><a href="generate-docs.js">generate-docs.js</a></li>
+    <li><a href="geojson-source.html">geojson-source.html</a></li>
+    <li><a href="inspect-only.html">inspect-only.html</a></li>
+    <li><a href="less-fidly.html">less-fidly.html</a></li>
+    <li><a href="many-sources.html">many-sources.html</a></li>
+    <li><a href="map-popup.html">map-popup.html</a></li>
+    <li><a href="no-inspect-style.html">no-inspect-style.html</a></li>
+    <li><a href="no-options.html">no-options.html</a></li>
+    <li><a href="no-popup.html">no-popup.html</a></li>
+    <li><a href="popup-on-click.html">popup-on-click.html</a></li>
+    <li><a href="query-params.html">query-params.html</a></li>
+    <li><a href="raster.html">raster.html</a></li>
+    <li><a href="url-hash-toggle-callback.html">url-hash-toggle-callback.html</a></li>
 </body>
 </html>
