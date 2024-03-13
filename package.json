@@ -37,6 +37,7 @@
   "homepage": "https://github.com/maplibre/maplibre-gl-inspect#readme",
   "dependencies": {
     "lodash.isequal": "^4.5.0",
+    "lodash.throttle": "^4.1.1",
     "randomcolor": "^0.6.2"
   },
   "devDependencies": {
@@ -44,8 +45,10 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/lodash.isequal": "^4.5.8",
+    "@types/lodash.throttle": "^4.1.9",
     "@types/randomcolor": "^0.5.9",
     "eslint": "^8.57.0",
+    "maplibre-gl": "^4.1.0",
     "rollup": "^4.13.0",
     "rollup-plugin-dts": "^6.1.0",
     "tslib": "^2.6.2",
