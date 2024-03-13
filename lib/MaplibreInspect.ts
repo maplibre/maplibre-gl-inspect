@@ -85,7 +85,8 @@ export type MaplibreInspectOptions = {
    */
   queryParameters?: QueryRenderedFeaturesOptions;
   /**
-   * Sources
+   * Sources to be used for inspecting, setting this will disable the automatic source detection.
+   * This is a dictionary containing the source IDs and their vector layer IDs
    */
   sources?: {[key: string]: string[]};
   /**
@@ -158,7 +159,8 @@ class MaplibreInspect implements IControl {
       useInspectStyle: true,
       queryParameters: {},
       sources: {},
-      toggleCallback() {}
+      toggleCallback() {},
+      manageStyleOutside: false
     }, options);
 
     this.sources = this.options.sources;
@@ -201,37 +203,48 @@ class MaplibreInspect implements IControl {
     }
   }
 
-  public _onSourceChange = (e: MapSourceDataEvent) => {
-    const sources = this.sources;
-    const map = this._map!;
-    const mapStyle = map.getStyle();
-    const mapStyleSourcesNames = Object.keys(mapStyle.sources);
-    const previousSources = Object.assign({}, sources);
-
+  private _setSourcesFromMap() {
     //NOTE: This heavily depends on the internal API of Maplibre GL
     //so this breaks between Maplibre GL JS releases
-    if (e.sourceDataType !==  'visibility' && e.isSourceLoaded) {
-      Object.keys(map.style.sourceCaches).forEach((sourceId) => {
-        const sourceCache = map.style.sourceCaches[sourceId] || {_source: {}};
-        const layerIds = sourceCache._source.vectorLayerIds;
-        if (layerIds) {
-          sources[sourceId] = layerIds;
-        } else if (sourceCache._source.type === 'geojson') {
-          sources[sourceId] = [];
-        }
-      });
-
-      Object.keys(sources).forEach((sourceId) => {
-        if (mapStyleSourcesNames.indexOf(sourceId) === -1) {
-          delete sources[sourceId];
-        }
-      });
-
-      if (!isEqual(previousSources, sources) && Object.keys(sources).length > 0) {
-        this.render();
+    const mapStyleSourcesNames = Object.keys(this._map!.getStyle().sources);
+    Object.keys(this._map!.style.sourceCaches).forEach((sourceId) => {
+      const sourceCache = this._map!.style.sourceCaches[sourceId] || {_source: {}};
+      const layerIds = sourceCache._source.vectorLayerIds;
+      if (layerIds) {
+        this.sources[sourceId] = layerIds;
+      } else if (sourceCache._source.type === 'geojson') {
+        this.sources[sourceId] = [];
       }
+    });
+
+    Object.keys(this.sources).forEach((sourceId) => {
+      if (mapStyleSourcesNames.indexOf(sourceId) === -1) {
+        delete this.sources[sourceId];
+      }
+    });
+  }
+
+  public _onSourceChange = (e: MapSourceDataEvent) => {
+    if (e.sourceDataType ===  'visibility' || !e.isSourceLoaded) {
+      return;
+    }
+    const previousSources = Object.assign({}, this.sources);  
+    this._setSourcesFromMap();
+
+    if (!isEqual(previousSources, this.sources) && Object.keys(this.sources).length > 0) {
+      this.render();
     }
   };
+
+  /**
+   * This will set the original style of the map
+   * It will also update the sources assuming the map has already been loaded
+   * @param style - The original style
+   */
+  public setOriginalStyle(style: StyleSpecification) {
+    this._originalStyle = style;
+    this._setSourcesFromMap();
+  }
 
   public _onStyleChange = () => {
     const style = this._map!.getStyle();

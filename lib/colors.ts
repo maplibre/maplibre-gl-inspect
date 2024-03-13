@@ -3,10 +3,11 @@ import randomColor from 'randomcolor';
 /**
  * Assign a color to a unique layer ID and also considering
  * common layer names such as water or wood.
- * @param {string} layerId
- * @return {string} Unique random for the layer ID
+ * @param layerId - a layer ID
+ * @param alpha - alpha value for the color, default is 1
+ * @return a color in rgba string format
  */
-function brightColor(layerId: string, alpha: string) {
+function brightColor(layerId: string, alpha?: number) {
   let luminosity: NonNullable<Parameters<typeof randomColor>[0]>["luminosity"] = 'bright';
   let hue: NonNullable<Parameters<typeof randomColor>[0]>["hue"] = undefined;
 
