@@ -177,6 +177,7 @@ class MaplibreInspect implements IControl {
 
   public toggleInspector() {
     this._showInspectMap = !this._showInspectMap;
+    this._popupBlocked = false;
     this.options.toggleCallback(this._showInspectMap);
     this.render();
   }
