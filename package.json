@@ -1,6 +1,6 @@
 {
   "name": "@maplibre/maplibre-gl-inspect",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Maplibre GL JS plugin for inspecting vector data",
   "main": "dist/maplibre-gl-inspect.js",
   "module": "dist/maplibre-gl-inspect.mjs",
