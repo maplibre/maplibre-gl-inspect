@@ -1,4 +1,4 @@
-const randomColor = require('randomcolor');
+import randomColor from 'randomcolor';
 
 /**
  * Assign a color to a unique layer ID and also considering
@@ -6,9 +6,9 @@ const randomColor = require('randomcolor');
  * @param {string} layerId
  * @return {string} Unique random for the layer ID
  */
-function brightColor(layerId, alpha) {
-  let luminosity = 'bright';
-  let hue = null;
+function brightColor(layerId: string, alpha: string) {
+  let luminosity: NonNullable<Parameters<typeof randomColor>[0]>["luminosity"] = 'bright';
+  let hue: NonNullable<Parameters<typeof randomColor>[0]>["hue"] = undefined;
 
   if (/water|ocean|lake|sea|river/.test(layerId)) {
     hue = 'blue';
@@ -47,10 +47,9 @@ function brightColor(layerId, alpha) {
     hue,
     seed: layerId,
     format: 'rgbArray'
-  });
+  }) as unknown as string[];
 
-  const rgba = rgb.concat([alpha || 1]);
-  return `rgba(${  rgba.join(', ')  })`;
+  return `rgba(${rgb.join(', ')}, ${alpha || "1"})`;
 }
 
-exports.brightColor = brightColor;
+export default { brightColor };

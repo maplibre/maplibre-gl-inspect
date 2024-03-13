@@ -1,5 +1,7 @@
-function circleLayer(color, source, vectorLayer) {
-  const layer = {
+import type { LayerSpecification, StyleSpecification } from "maplibre-gl";
+
+function circleLayer(color: string, source: string, vectorLayer?: string) {
+  const layer: LayerSpecification = {
     id: [source, vectorLayer, 'circle'].join('_'),
     source,
     type: 'circle',
@@ -15,8 +17,8 @@ function circleLayer(color, source, vectorLayer) {
   return layer;
 }
 
-function polygonLayer(color, outlineColor, source, vectorLayer) {
-  const layer = {
+function polygonLayer(color: string, _outlineColor: string, source: string, vectorLayer?: string) {
+  const layer: LayerSpecification = {
     id: [source, vectorLayer, 'polygon'].join('_'),
     source,
     type: 'fill',
@@ -33,8 +35,8 @@ function polygonLayer(color, outlineColor, source, vectorLayer) {
   return layer;
 }
 
-function lineLayer(color, source, vectorLayer) {
-  const layer = {
+function lineLayer(color: string, source: string, vectorLayer?: string) {
+  const layer: LayerSpecification = {
     id: [source, vectorLayer, 'line'].join('_'),
     source,
     layout: {
@@ -55,24 +57,22 @@ function lineLayer(color, source, vectorLayer) {
 
 /**
  * Generate colored layer styles for the given sources
- * TODO: Improve docs
- * @param {Object} Sources dict containing the vector layer IDs
- * @param {Function} Function to generate a color for a layer
- * @return {array} Array of Maplibre GL layers
+ * @param sources dictionary containing the vector layer IDs
+ * @param Function to generate a color for a layer
+ * @return Array of Maplibre GL layers
  */
-function generateColoredLayers(sources, assignLayerColor) {
-  const polyLayers = [];
-  const circleLayers = [];
-  const lineLayers = [];
+function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerColor: (layerId: string, alpha: number) => string): LayerSpecification[] {
+  const polyLayers: LayerSpecification[] = [];
+  const circleLayers: LayerSpecification[] = [];
+  const lineLayers: LayerSpecification[] = [];
 
-  function alphaColors(layerId) {
-    const color = assignLayerColor.bind(null, layerId);
+  function alphaColors(layerId: string) {
     const obj = {
-      circle: color(0.8),
-      line: color(0.6),
-      polygon: color(0.3),
-      polygonOutline: color(0.6),
-      default: color(1)
+      circle: assignLayerColor(layerId, 0.8),
+      line: assignLayerColor(layerId, 0.6),
+      polygon: assignLayerColor(layerId, 0.3),
+      polygonOutline: assignLayerColor(layerId, 0.6),
+      default: assignLayerColor(layerId, 1)
     };
     return obj;
   }
@@ -86,7 +86,7 @@ function generateColoredLayers(sources, assignLayerColor) {
       lineLayers.push(lineLayer(colors.line, sourceId));
       polyLayers.push(polygonLayer(colors.polygon, colors.polygonOutline, sourceId));
     } else {
-      layers.forEach((layerId) => {
+      layers.forEach((layerId: string) => {
         const colors = alphaColors(layerId);
 
         circleLayers.push(circleLayer(colors.circle, sourceId, layerId));
@@ -101,16 +101,17 @@ function generateColoredLayers(sources, assignLayerColor) {
 
 /**
  * Create inspection style out of the original style and the new colored layers
- * @param {Object} Original map styles
- * @param {array} Array of colored Maplibre GL layers
+ * @param originalMapStyle - map style
+ * @param coloredLayers - array of colored Maplibre GL layers
+ * @param opts - options
  * @return {Object} Colored inspect style
  */
-function generateInspectStyle(originalMapStyle, coloredLayers, opts) {
+function generateInspectStyle(originalMapStyle: StyleSpecification, coloredLayers: LayerSpecification[], opts: {backgroundColor?: string}): StyleSpecification {
   opts = Object.assign({
     backgroundColor: '#fff'
   }, opts);
 
-  const backgroundLayer = {
+  const backgroundLayer: LayerSpecification = {
     'id': 'background',
     'type': 'background',
     'paint': {
@@ -118,7 +119,7 @@ function generateInspectStyle(originalMapStyle, coloredLayers, opts) {
     }
   };
 
-  const sources = {};
+  const sources: StyleSpecification["sources"] = {};
   Object.keys(originalMapStyle.sources).forEach((sourceId) => {
     const source = originalMapStyle.sources[sourceId];
     if (source.type === 'vector' || source.type === 'geojson') {
@@ -127,13 +128,15 @@ function generateInspectStyle(originalMapStyle, coloredLayers, opts) {
   });
 
   return Object.assign(originalMapStyle, {
-    layers: [backgroundLayer].concat(coloredLayers),
+    layers: ([backgroundLayer] as LayerSpecification[]).concat(coloredLayers),
     sources
   });
 }
 
-exports.polygonLayer = polygonLayer;
-exports.lineLayer = lineLayer;
-exports.circleLayer = circleLayer;
-exports.generateInspectStyle = generateInspectStyle;
-exports.generateColoredLayers = generateColoredLayers;
+export default {
+  polygonLayer,
+  lineLayer,
+  circleLayer,
+  generateInspectStyle,
+  generateColoredLayers
+}
