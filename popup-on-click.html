@@ -26,9 +26,10 @@ var map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl());
 map.addControl(new MaplibreInspect({
-  showMapPopup: true,
-  showMapPopupOnHover: false,
-  showInspectMapPopupOnHover: false
+    showMapPopup: true,
+    showMapPopupOnHover: false,
+    showInspectMapPopupOnHover: true,
+    blockHoverPopupOnClick: true,
 }));
 </script>
 
