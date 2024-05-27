@@ -52,7 +52,7 @@
     "tslib": "^2.6.2",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.9.0"
+    "typescript-eslint": "^7.10.0"
   },
   "peerDependencies": {
     "maplibre-gl": ">3.0.0"
