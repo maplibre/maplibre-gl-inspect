@@ -12,6 +12,7 @@
     "build": "rollup --configPlugin @rollup/plugin-typescript -c",
     "build-css": "mkdir -p dist && cp index.css dist/maplibre-gl-inspect.css",
     "build-dist": "npm run build && npm run build-css",
+    "start": "st --no-cache -H 0.0.0.0 --port 65432 .",
     "docs": "typedoc --entryPoints index.ts --out docs/API --treatWarningsAsErrors && node ./examples/generate-docs.js"
   },
   "repository": {
@@ -49,6 +50,7 @@
     "maplibre-gl": "^4.3.2",
     "rollup": "^4.18.0",
     "rollup-plugin-dts": "^6.1.1",
+    "st": "^3.0.0",
     "tslib": "^2.6.3",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5",

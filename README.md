@@ -9,9 +9,9 @@ of the vector sources and allows hovering over features to see their properties.
 
 ![Maplibre GL Inspect Preview](https://cloud.githubusercontent.com/assets/1288339/21744637/11759412-d51a-11e6-9581-f26741fcd182.gif)
 
-## Usage
+## Quick Start
 
-**maplibre-gl-inspect** is a Maplibre GL JS plugin that you can easily add on top of your map. Check `index.html` for a complete example.
+**maplibre-gl-inspect** is a Maplibre GL JS plugin that you can easily add on top of your map.
 
 Make sure to include the CSS and JS files.
 
@@ -25,9 +25,9 @@ Make sure to include the CSS and JS files.
 **When using modules**
 
 ```js
-require('maplibre-gl-inspect/dist/maplibre-gl-inspect.css');
-var maplibregl = require('maplibre-gl');
-var MaplibreInspect = require('maplibre-gl-inspect');
+import 'maplibre-gl-inspect/dist/maplibre-gl-inspect.css';
+import maplibregl from 'maplibre-gl';
+import MaplibreInspect from 'maplibre-gl-inspect';
 
 // Pass an initialized popup to Maplibre GL
 map.addControl(new MaplibreInspect({
@@ -38,6 +38,16 @@ map.addControl(new MaplibreInspect({
 }));
 ```
 
+## Documentation
+
+The docs can be found here:
+https://maplibre.org/maplibre-gl-inspect/
+
+The docs have two main sections - the API and the examples.
+In order to see the examples' code either go to the examples folder in this repo, or press inspect in the browser to see the code.
+It is written in plain html, no extra javascript files in order to have it as simple as possible.
+
+## Short Examples
 
 ### Add Inspect Control
 
@@ -87,7 +97,7 @@ You can also control the Popup output. Check `examples/custom-popup.html`
 
 ```javascript
 map.addControl(new MaplibreInspect({
-  renderPopup: function(features) {
+  renderPopup: (features) => {
     return '<h1>' + features.length + '</h1>';
   }
 }));
@@ -102,7 +112,7 @@ Check `examples/custom-color-1.html` and `examples/custom-color-2.html`.
 var colors = ['#FC49A3', '#CC66FF', '#66CCFF', '#66FFCC'];
 map.addControl(new MaplibreInspect({
   backgroundColor: '#000',
-  assignLayerColor: function(layerId, alpha) {
+  assignLayerColor: (layerId, alpha) => {
     var randomNumber = parseInt(Math.random() * colors.length);
     return colors[randomNumber];
    }
@@ -124,7 +134,7 @@ map.addControl(new MaplibreInspect({
 
 ### Show Popup only for certain Features
 
-You can pass a `queryParameters` object structured like the parameters object documented for `map.queryRenderedFeatures`](https://maplibre.org/maplibre-gl-js-docs/api/map/#map#queryrenderedfeatures).
+You can pass a `queryParameters` object structured like the parameters object documented for `map.queryRenderedFeatures`](https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/#queryrenderedfeatures).
 This let's you show the inspect popup for only certain layers.
 Check `examples/query-params.html`.
 
@@ -137,7 +147,7 @@ map.addControl(new MaplibreInspect({
 }));
 ```
 
-You can also use this feature to do custom layer [filtering](https://maplibre.org/maplibre-gl-js-docs/style-spec/types/).
+You can also use this feature to do custom layer [filtering](https://maplibre.org/maplibre-style-spec/expressions/).
 
 ```js
 map.addControl(new MaplibreInspect({
@@ -180,7 +190,7 @@ Check `examples/url-hash-toggle-callback.html`.
 
 ```js
 map.addControl(new MaplibreInspect({
-  toggleCallback: function(showInspectMap) { 
+  toggleCallback: (showInspectMap) => { 
     console.log(`showInspectMap is ${showInspectMap}`);
   }
 }));
@@ -188,17 +198,19 @@ map.addControl(new MaplibreInspect({
 
 ## Develop
 
-Run the linter and watch for changes to rebuild with browserify.
+To build the library:
 
 ```
 npm install
-npm run lint
-npm run watch
+npm run build-dist
 ```
 
-Create a minified standalone build.
+To see how it behaves
 
 ```
 npm install
-npm run build
+npm run build-dist
+npm run start
 ```
+
+This will start a local server, surf to it and to the `examples` folder to see changes in the code.
