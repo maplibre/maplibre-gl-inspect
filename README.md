@@ -25,9 +25,9 @@ Make sure to include the CSS and JS files.
 **When using modules**
 
 ```js
-import 'maplibre-gl-inspect/dist/maplibre-gl-inspect.css';
+import '@maplibre/maplibre-gl-inspect/dist/maplibre-gl-inspect.css';
 import maplibregl from 'maplibre-gl';
-import MaplibreInspect from 'maplibre-gl-inspect';
+import MaplibreInspect from '@maplibre/maplibre-gl-inspect';
 
 // Pass an initialized popup to Maplibre GL
 map.addControl(new MaplibreInspect({
