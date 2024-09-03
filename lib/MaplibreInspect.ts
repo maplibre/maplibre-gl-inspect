@@ -314,6 +314,7 @@ class MaplibreInspect implements IControl {
     }
   };
 
+  /** @inheritdoc */
   public onAdd(map: Map) {
     this._map = map;
 
@@ -332,6 +333,7 @@ class MaplibreInspect implements IControl {
     return this._toggle.elem;
   }
 
+  /** @inheritdoc */
   public onRemove() {
     this._map!.off('styledata', this._onStyleChange);
     this._map!.off('load', this._onStyleChange);
