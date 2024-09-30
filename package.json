@@ -48,7 +48,7 @@
     "@types/randomcolor": "^0.5.9",
     "eslint": "^9.11.1",
     "maplibre-gl": "^4.7.0",
-    "rollup": "^4.21.3",
+    "rollup": "^4.22.5",
     "rollup-plugin-dts": "^6.1.1",
     "st": "^3.0.0",
     "tslib": "^2.7.0",
