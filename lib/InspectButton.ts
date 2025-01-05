@@ -28,7 +28,8 @@ class InspectButton {
     const btn = document.createElement('button');
     btn.className = 'maplibregl-ctrl-icon maplibregl-ctrl-inspect';
     btn.type = 'button';
-    btn.setAttribute('aria-label', 'Inspect');
+    btn.title = 'Toggle Inspect';
+    btn.setAttribute('aria-label', 'Toggle Inspect');
     return btn;
   }
 
