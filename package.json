@@ -47,7 +47,7 @@
     "@types/lodash.isequal": "^4.5.8",
     "@types/randomcolor": "^0.5.9",
     "eslint": "^9.28.0",
-    "maplibre-gl": "^5.5.0",
+    "maplibre-gl": "^5.6.0",
     "rollup": "^4.41.1",
     "rollup-plugin-dts": "^6.2.1",
     "st": "^3.0.2",
