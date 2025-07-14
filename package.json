@@ -46,7 +46,7 @@
     "@rollup/plugin-typescript": "^12.1.4",
     "@types/lodash.isequal": "^4.5.8",
     "@types/randomcolor": "^0.5.9",
-    "eslint": "^9.30.0",
+    "eslint": "^9.31.0",
     "maplibre-gl": "^5.6.1",
     "rollup": "^4.44.1",
     "rollup-plugin-dts": "^6.2.1",
