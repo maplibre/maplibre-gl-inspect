@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Maplibre GL Inspect</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
+    <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
+    <script src='../dist/maplibre-gl-inspect.js'></script>
+    <link href='../dist/maplibre-gl-inspect.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+var map = new maplibregl.Map({
+    container: 'map', // container id
+	style: 'https://demotiles.maplibre.org/style.json', // style URL
+    center: [-74.50, 40], // starting position [lng, lat]
+    zoom: 3, // starting zoom
+    hash: true
+});
+map.addControl(new maplibregl.NavigationControl());
+map.addControl(new MaplibreInspect({
+  showInspectMap: true,
+  showMapPopup: true,
+  showInspectButton: false
+}));
+class UrlControl {
+    onAdd(myMap) {
+        let container = document.createElement('div');
+        const input = document.createElement('input');
+        input.name = 'style-url';
+        input.type = 'text';
+        input.placeholder = '🔗 Style URL';
+        input.style = "pointer-events: auto; width: 50vw;";
+        input.addEventListener('blur', () => { 
+            myMap.setStyle(input.value);
+        });
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                myMap.setStyle(input.value);
+            }
+        });
+        container.appendChild(input);
+        return container;
+    }
+}
+map.addControl(new UrlControl(), 'top-left');
+</script>
+
+</body>
+</html>

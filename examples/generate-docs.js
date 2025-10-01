@@ -6,14 +6,12 @@ import fs from 'fs';
  * It also creates an index.html file with links to all the examples.
  */
 
-const files = fs.readdirSync('./examples');
+const files = fs.readdirSync('./examples').filter(f => f.endsWith('.html'));
 
 for (const file of files) {
-    if (file.endsWith('.html')) {
-        let content = fs.readFileSync(`./examples/${file}`, 'utf8');
-        content = content.replaceAll("../", 'https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/');
-        fs.writeFileSync(`./docs/${file}`, content);
-    }
+    let content = fs.readFileSync(`./examples/${file}`, 'utf8');
+    content = content.replaceAll("../", 'https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/');
+    fs.writeFileSync(`./docs/${file}`, content);
 }
 
 const index = `
