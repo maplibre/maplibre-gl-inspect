@@ -208,7 +208,7 @@ class MaplibreInspect implements IControl {
     //NOTE: This heavily depends on the internal API of Maplibre GL
     //so this breaks between Maplibre GL JS releases
     const mapStyleSourcesNames = Object.keys(this._map!.getStyle().sources);
-    Object.keys(this._map!.style.sourceCaches).forEach((sourceId) => {
+    for (const sourceId of Object.keys(this._map!.style.sourceCaches)) {
       const sourceCache = this._map!.style.sourceCaches[sourceId] || {_source: {}};
       const layerIds = sourceCache._source.vectorLayerIds;
       if (layerIds) {
@@ -216,13 +216,13 @@ class MaplibreInspect implements IControl {
       } else if (sourceCache._source.type === 'geojson') {
         this.sources[sourceId] = [];
       }
-    });
+    }
 
-    Object.keys(this.sources).forEach((sourceId) => {
+    for (const sourceId of Object.keys(this.sources)) {
       if (mapStyleSourcesNames.indexOf(sourceId) === -1) {
         delete this.sources[sourceId];
       }
-    });
+    }
   }
 
   public _onSourceChange = (e: MapSourceDataEvent) => {

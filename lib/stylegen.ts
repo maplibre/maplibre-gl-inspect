@@ -77,7 +77,7 @@ function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerCo
   const circleLayers: LayerSpecification[] = [];
   const lineLayers: LayerSpecification[] = [];
 
-  Object.keys(sources).forEach((sourceId) => {
+  for (const sourceId of Object.keys(sources)) {
     const layers = sources[sourceId];
 
     if (!layers || layers.length === 0) {
@@ -86,15 +86,15 @@ function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerCo
       lineLayers.push(lineLayer(colors.line, sourceId));
       polyLayers.push(polygonLayer(colors.polygon, colors.polygonOutline, sourceId));
     } else {
-      layers.forEach((layerId: string) => {
+      for (const layerId of layers) {
         const colors = alphaColors(layerId, assignLayerColor);
 
         circleLayers.push(circleLayer(colors.circle, sourceId, layerId));
         lineLayers.push(lineLayer(colors.line, sourceId, layerId));
         polyLayers.push(polygonLayer(colors.polygon, colors.polygonOutline, sourceId, layerId));
-      });
+      }
     }
-  });
+  }
 
   return polyLayers.concat(lineLayers).concat(circleLayers);
 }
@@ -120,12 +120,12 @@ function generateInspectStyle(originalMapStyle: StyleSpecification, coloredLayer
   };
 
   const sources: StyleSpecification["sources"] = {};
-  Object.keys(originalMapStyle.sources).forEach((sourceId) => {
+  for (const sourceId of Object.keys(originalMapStyle.sources)) {
     const source = originalMapStyle.sources[sourceId];
     if (source.type === 'vector' || source.type === 'geojson') {
       sources[sourceId] = source;
     }
-  });
+  }
 
   return Object.assign(originalMapStyle, {
     layers: ([backgroundLayer] as LayerSpecification[]).concat(coloredLayers),
