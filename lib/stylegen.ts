@@ -69,7 +69,7 @@ function alphaColors(layerId: string, assignLayerColor: (layerId: string, alpha:
 /**
  * Generate colored layer styles for the given sources
  * @param sources dictionary containing the vector layer IDs
- * @param Function to generate a color for a layer
+ * @param assignLayerColor to generate a color for a layer
  * @return Array of Maplibre GL layers
  */
 function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerColor: (layerId: string, alpha: number) => string): LayerSpecification[] {
