@@ -1,7 +1,7 @@
-import type { LayerSpecification, StyleSpecification } from "maplibre-gl";
+import type { CircleLayerSpecification, FillLayerSpecification, LayerSpecification, LineLayerSpecification, StyleSpecification } from "maplibre-gl";
 
-function circleLayer(color: string, source: string, vectorLayer?: string) {
-  const layer: LayerSpecification = {
+function circleLayer(color: string, source: string, vectorLayer?: string): CircleLayerSpecification {
+  const layer: CircleLayerSpecification = {
     id: [source, vectorLayer, 'circle'].join('_'),
     source,
     type: 'circle',
@@ -17,8 +17,8 @@ function circleLayer(color: string, source: string, vectorLayer?: string) {
   return layer;
 }
 
-function polygonLayer(color: string, _outlineColor: string, source: string, vectorLayer?: string) {
-  const layer: LayerSpecification = {
+function polygonLayer(color: string, _outlineColor: string, source: string, vectorLayer?: string): FillLayerSpecification {
+  const layer: FillLayerSpecification = {
     id: [source, vectorLayer, 'polygon'].join('_'),
     source,
     type: 'fill',
@@ -35,8 +35,8 @@ function polygonLayer(color: string, _outlineColor: string, source: string, vect
   return layer;
 }
 
-function lineLayer(color: string, source: string, vectorLayer?: string) {
-  const layer: LayerSpecification = {
+function lineLayer(color: string, source: string, vectorLayer?: string): LineLayerSpecification {
+  const layer: LineLayerSpecification = {
     id: [source, vectorLayer, 'line'].join('_'),
     source,
     layout: {
