@@ -56,14 +56,14 @@ function lineLayer(color: string, source: string, vectorLayer?: string) {
 }
 
 function alphaColors(layerId: string, assignLayerColor: (layerId: string, alpha: number) => string) {
-    const obj = {
-      circle: assignLayerColor(layerId, 0.8),
-      line: assignLayerColor(layerId, 0.6),
-      polygon: assignLayerColor(layerId, 0.3),
-      polygonOutline: assignLayerColor(layerId, 0.6),
-      default: assignLayerColor(layerId, 1)
-    };
-    return obj;
+  const obj = {
+    circle: assignLayerColor(layerId, 0.8),
+    line: assignLayerColor(layerId, 0.6),
+    polygon: assignLayerColor(layerId, 0.3),
+    polygonOutline: assignLayerColor(layerId, 0.6),
+    default: assignLayerColor(layerId, 1)
+  };
+  return obj;
 }
 
 /**
