@@ -2,6 +2,14 @@ import type { CircleLayerSpecification, FillLayerSpecification, LayerSpecificati
 
 type AssignColorFunction = (layerId: string, alpha: number) => string;
 
+type AssignColorResponse = {
+  circle: string,
+  line: string,
+  polygon: string,
+  polygonOutline: string,
+  default: string
+}
+
 function circleLayer(color: string, source: string, vectorLayer?: string): CircleLayerSpecification {
   const layer: CircleLayerSpecification = {
     id: [source, vectorLayer, 'circle'].join('_'),
@@ -57,15 +65,14 @@ function lineLayer(color: string, source: string, vectorLayer?: string): LineLay
   return layer;
 }
 
-function alphaColors(layerId: string, assignLayerColor: AssignColorFunction) {
-  const obj = {
+function alphaColors(layerId: string, assignLayerColor: AssignColorFunction): AssignColorResponse {
+  return {
     circle: assignLayerColor(layerId, 0.8),
     line: assignLayerColor(layerId, 0.6),
     polygon: assignLayerColor(layerId, 0.3),
     polygonOutline: assignLayerColor(layerId, 0.6),
     default: assignLayerColor(layerId, 1)
   };
-  return obj;
 }
 
 /**
