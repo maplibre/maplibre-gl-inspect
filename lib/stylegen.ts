@@ -1,5 +1,7 @@
 import type { CircleLayerSpecification, FillLayerSpecification, LayerSpecification, LineLayerSpecification, StyleSpecification } from "maplibre-gl";
 
+type AssignColorFunction = (layerId: string, alpha: number) => string;
+
 function circleLayer(color: string, source: string, vectorLayer?: string): CircleLayerSpecification {
   const layer: CircleLayerSpecification = {
     id: [source, vectorLayer, 'circle'].join('_'),
@@ -55,7 +57,7 @@ function lineLayer(color: string, source: string, vectorLayer?: string): LineLay
   return layer;
 }
 
-function alphaColors(layerId: string, assignLayerColor: (layerId: string, alpha: number) => string) {
+function alphaColors(layerId: string, assignLayerColor: AssignColorFunction) {
   const obj = {
     circle: assignLayerColor(layerId, 0.8),
     line: assignLayerColor(layerId, 0.6),
@@ -72,7 +74,7 @@ function alphaColors(layerId: string, assignLayerColor: (layerId: string, alpha:
  * @param assignLayerColor to generate a color for a layer
  * @return Array of Maplibre GL layers
  */
-function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerColor: (layerId: string, alpha: number) => string): LayerSpecification[] {
+function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerColor: AssignColorFunction): LayerSpecification[] {
   const polyLayers: LayerSpecification[] = [];
   const circleLayers: LayerSpecification[] = [];
   const lineLayers: LayerSpecification[] = [];
