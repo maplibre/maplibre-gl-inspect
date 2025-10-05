@@ -55,6 +55,17 @@ function lineLayer(color: string, source: string, vectorLayer?: string) {
   return layer;
 }
 
+function alphaColors(layerId: string, assignLayerColor: (layerId: string, alpha: number) => string) {
+    const obj = {
+      circle: assignLayerColor(layerId, 0.8),
+      line: assignLayerColor(layerId, 0.6),
+      polygon: assignLayerColor(layerId, 0.3),
+      polygonOutline: assignLayerColor(layerId, 0.6),
+      default: assignLayerColor(layerId, 1)
+    };
+    return obj;
+}
+
 /**
  * Generate colored layer styles for the given sources
  * @param sources dictionary containing the vector layer IDs
@@ -66,28 +77,17 @@ function generateColoredLayers(sources: {[key: string]: string[]}, assignLayerCo
   const circleLayers: LayerSpecification[] = [];
   const lineLayers: LayerSpecification[] = [];
 
-  function alphaColors(layerId: string) {
-    const obj = {
-      circle: assignLayerColor(layerId, 0.8),
-      line: assignLayerColor(layerId, 0.6),
-      polygon: assignLayerColor(layerId, 0.3),
-      polygonOutline: assignLayerColor(layerId, 0.6),
-      default: assignLayerColor(layerId, 1)
-    };
-    return obj;
-  }
-
   Object.keys(sources).forEach((sourceId) => {
     const layers = sources[sourceId];
 
     if (!layers || layers.length === 0) {
-      const colors = alphaColors(sourceId);
+      const colors = alphaColors(sourceId, assignLayerColor);
       circleLayers.push(circleLayer(colors.circle, sourceId));
       lineLayers.push(lineLayer(colors.line, sourceId));
       polyLayers.push(polygonLayer(colors.polygon, colors.polygonOutline, sourceId));
     } else {
       layers.forEach((layerId: string) => {
-        const colors = alphaColors(layerId);
+        const colors = alphaColors(layerId, assignLayerColor);
 
         circleLayers.push(circleLayer(colors.circle, sourceId, layerId));
         lineLayers.push(lineLayer(colors.line, sourceId, layerId));
