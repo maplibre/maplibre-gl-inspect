@@ -217,6 +217,8 @@ class MaplibreInspect implements IControl {
           const vectorLayerIds = tileJSON?.vector_layers?.map((layer: {id: string}) => { return layer.id; });
           if (vectorLayerIds) {
             this.sources[sourceId] = vectorLayerIds;
+          } else {
+            throw new Error("Missing vectorlayersIds in source" + sourceId);
           }
         } catch {
           console.warn("Unable to retrieve tileJSON from " + style.sources[sourceId].url + " using style's layers");
