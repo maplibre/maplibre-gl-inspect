@@ -204,20 +204,25 @@ class MaplibreInspect implements IControl {
     }
   }
 
-  private _setSourcesFromMap() {
-    //NOTE: This heavily depends on the internal API of Maplibre GL
-    //so this breaks between Maplibre GL JS releases
-    const mapStyleSourcesNames = Object.keys(this._map!.getStyle().sources);
-    for (const sourceId of Object.keys(this._map!.style.sourceCaches)) {
-      const sourceCache = this._map!.style.sourceCaches[sourceId] || {_source: {}};
-      const layerIds = sourceCache._source.vectorLayerIds;
-      if (layerIds) {
-        this.sources[sourceId] = layerIds;
-      } else if (sourceCache._source.type === 'geojson') {
+  private async _setSourcesFromMap() {
+    const style = this._map!.getStyle();
+    const mapStyleSourcesNames = Object.keys(style.sources);
+    for (const sourceId of mapStyleSourcesNames) {
+      if (style.sources[sourceId].type === 'geojson') {
         this.sources[sourceId] = [];
+      } else if (style.sources[sourceId].type === 'vector' && style.sources[sourceId].url) {
+        try {
+          const response = await fetch(style.sources[sourceId].url);
+          const tileJSON = await response.json();
+          const vectorLayerIds = tileJSON?.vector_layers?.map((layer: {id: string}) => { return layer.id; });
+          if (vectorLayerIds) {
+            this.sources[sourceId] = vectorLayerIds;
+          }
+        } catch {
+          console.warn("Unable to retrieve tileJSON from " + style.sources[sourceId].url);
+        }
       }
     }
-
     for (const sourceId of Object.keys(this.sources)) {
       if (mapStyleSourcesNames.indexOf(sourceId) === -1) {
         delete this.sources[sourceId];
@@ -225,12 +230,12 @@ class MaplibreInspect implements IControl {
     }
   }
 
-  public _onSourceChange = (e: MapSourceDataEvent) => {
+  public _onSourceChange = async (e: MapSourceDataEvent) => {
     if (e.sourceDataType ===  'visibility' || !e.isSourceLoaded) {
       return;
     }
     const previousSources = Object.assign({}, this.sources);  
-    this._setSourcesFromMap();
+    await this._setSourcesFromMap();
 
     if (!isEqual(previousSources, this.sources) && Object.keys(this.sources).length > 0) {
       // If the sources have changed, we need to re-render the inspect style but not too fast
