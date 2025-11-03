@@ -219,7 +219,16 @@ class MaplibreInspect implements IControl {
             this.sources[sourceId] = vectorLayerIds;
           }
         } catch {
-          console.warn("Unable to retrieve tileJSON from " + style.sources[sourceId].url);
+          console.warn("Unable to retrieve tileJSON from " + style.sources[sourceId].url + " using style's layers");
+          for (const layer of style.layers) {
+            if ('source-layer' in layer && layer['source-layer']) {
+              const sourceId = layer['source-layer'];
+              if (!this.sources[sourceId]) {
+                this.sources[sourceId] = [];
+              }
+              this.sources[sourceId].push(layer.id);
+            }
+          }
         }
       }
     }
