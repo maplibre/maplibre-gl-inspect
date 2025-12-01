@@ -218,17 +218,17 @@ class MaplibreInspect implements IControl {
           if (vectorLayerIds) {
             this.sources[sourceId] = vectorLayerIds;
           } else {
-            throw new Error("Missing vectorlayersIds in source" + sourceId);
+            throw new Error("Missing vector_layers in source" + sourceId);
           }
         } catch {
           console.warn("Unable to retrieve tileJSON from " + style.sources[sourceId].url + " using style's layers");
           for (const layer of style.layers) {
             if ('source-layer' in layer && layer['source-layer']) {
-              const sourceId = layer['source-layer'];
+              const layerId = layer['source-layer'];
               if (!this.sources[sourceId]) {
                 this.sources[sourceId] = [];
               }
-              this.sources[sourceId].push(layer.id);
+              this.sources[sourceId].push(layerId);
             }
           }
         }
@@ -237,6 +237,9 @@ class MaplibreInspect implements IControl {
     for (const sourceId of Object.keys(this.sources)) {
       if (mapStyleSourcesNames.indexOf(sourceId) === -1) {
         delete this.sources[sourceId];
+      } else {
+        // uniqify the list of layer names
+        this.sources[sourceId] = [...new Set(this.sources[sourceId])]
       }
     }
   }
