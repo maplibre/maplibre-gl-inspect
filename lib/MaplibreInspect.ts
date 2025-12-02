@@ -218,7 +218,7 @@ class MaplibreInspect implements IControl {
           if (vectorLayerIds) {
             this.sources[sourceId] = vectorLayerIds;
           } else {
-            throw new Error("Missing vector_layers in source" + sourceId);
+            throw new Error("Missing vector_layers in source: " + sourceId);
           }
         } catch {
           console.warn("Unable to retrieve tileJSON from " + style.sources[sourceId].url + " using style's layers");
