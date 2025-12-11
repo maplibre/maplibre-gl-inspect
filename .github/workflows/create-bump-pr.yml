@@ -1,4 +1,4 @@
-name: Create bump version PR 
+name: Create bump version PR
 
 on:
   workflow_dispatch:
@@ -12,19 +12,7 @@ on:
           - patch
 
 jobs:
-  js-bump-version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Update version and commit
-        run: |
-          npm version ${{ github.event.inputs.release_type }} --no-git-tag-version
-          echo version="$(node -p "require('./package.json').version")" >> "$GITHUB_ENV"
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725 # v8.0.0
-        with:
-          commit-message: Bump version to ${{ env.version }}
-          branch: bump-version-${{ env.version }}
-          title: Bump version to ${{ env.version }}
+  bump-version-pr:
+    uses: maplibre/reusable-workflows/.github/workflows/create-bump-version-pr.yml@main
+    with:
+      version: ${{ github.event.inputs.release_type }}
