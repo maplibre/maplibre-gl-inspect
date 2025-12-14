@@ -10,3 +10,7 @@
 ### ✨ Features and improvements
 
 - Update Node.js version to 24.11 ([#342](https://github.com/maplibre/maplibre-gl-inspect/pull/342)) (by [HarelM](https://github.com/HarelM))
+
+## 1.8.1
+
+Older versions do not have a changelog unfortunately...
