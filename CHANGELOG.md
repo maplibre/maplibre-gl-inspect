@@ -1,9 +1,9 @@
 ## main
 ### ✨ Features and improvements
-- _...Add new stuff here..._
+- Add backwards-compatible support for MapLibre GL JS v6 and its ESM distribution.
 
 ### 🐞 Bug fixes
-- _...Add new stuff here..._
+- Render nested GeoJSON feature properties as JSON in inspection popups.
 
 ## 1.8.2
 

@@ -4,9 +4,7 @@
     <meta charset='utf-8' />
     <title>Maplibre GL Inspect</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
-    <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
-    <script src='../dist/maplibre-gl-inspect.js'></script>
+    <link href='https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.css' rel='stylesheet' />
     <link href='../dist/maplibre-gl-inspect.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
@@ -16,10 +14,32 @@
 <body>
 
 <div id='map'></div>
-<script>
+<script type='module'>
+import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.mjs';
+import MaplibreInspect from '../dist/maplibre-gl-inspect.mjs';
+
+window.maplibregl = maplibregl;
+
 var map = new maplibregl.Map({
     container: 'map',
-    style: 'https://api.maptiler.com/maps/44004506-8005-4d81-9889-6985a4993041/style.json?key=GET-YOUR-OWN-KEY',
+    style: {
+        version: 8,
+        sources: {
+            'raster-tiles': {
+                type: 'raster',
+                tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                tileSize: 256,
+                minzoom: 0,
+                maxzoom: 19,
+                attribution: '&copy; OpenStreetMap contributors'
+            }
+        },
+        layers: [{
+            id: 'raster-tiles',
+            type: 'raster',
+            source: 'raster-tiles'
+        }]
+    },
     center: [-74.50, 40],
     zoom: 3,
     hash: true

@@ -6,6 +6,7 @@ import colors from './colors';
 import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
 type InspectStyleSpecification = StyleSpecification & { metadata: { 'maplibregl-inspect:inspect': boolean } };
+type MaplibreGlobal = Pick<typeof import('maplibre-gl'), 'Popup'>;
 
 function isInspectStyle(style: InspectStyleSpecification) {
   return style.metadata && style.metadata['maplibregl-inspect:inspect'];
@@ -127,14 +128,15 @@ class MaplibreInspect implements IControl {
    */
   _map: Map | undefined;
 
-  constructor(options: MaplibreInspectOptions) {
+  constructor(options: MaplibreInspectOptions = {}) {
     if (!(this instanceof MaplibreInspect)) {
       throw new Error('MaplibreInspect needs to be called with the new keyword');
     }
 
     let popup = null;
-    if (window.maplibregl) {
-      popup = new window.maplibregl.Popup({
+    const maplibregl = (window as Window & {maplibregl?: MaplibreGlobal}).maplibregl;
+    if (maplibregl) {
+      popup = new maplibregl.Popup({
         closeButton: false,
         closeOnClick: false
       });
@@ -340,7 +342,6 @@ class MaplibreInspect implements IControl {
     // if sources have already been passed as options
     // we do not need to figure out the sources ourselves
     if (Object.keys(this.sources).length === 0) {
-      map.on('tiledata', this._onSourceChange);
       map.on('sourcedata', this._onSourceChange);
     }
 
@@ -356,7 +357,6 @@ class MaplibreInspect implements IControl {
   public onRemove() {
     this._map!.off('styledata', this._onStyleChange);
     this._map!.off('load', this._onStyleChange);
-    this._map!.off('tiledata', this._onSourceChange);
     this._map!.off('sourcedata', this._onSourceChange);
     this._map!.off('mousemove', this._onMousemove);
     this._map!.off('click', this._onMousemove);

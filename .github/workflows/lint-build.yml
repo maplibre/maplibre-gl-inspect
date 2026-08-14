@@ -19,3 +19,20 @@ jobs:
       - run: npm run lint
       - run: npm run docs
       - run: npm run build-dist
+
+  compatibility:
+    name: MapLibre GL JS ${{ matrix.maplibre }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        maplibre: ['3.0.0', '4.7.1', '5.24.0', '6.2.0']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      - run: npm ci
+      - run: npm install --no-save --ignore-scripts maplibre-gl@${{ matrix.maplibre }}
+      - run: npm run docs
+      - run: npm run build-dist
