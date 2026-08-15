@@ -3,10 +3,10 @@ import stylegen from './stylegen';
 import InspectButton from './InspectButton';
 import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
 import colors from './colors';
-import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
+import {Popup} from 'maplibre-gl';
+import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
 type InspectStyleSpecification = StyleSpecification & { metadata: { 'maplibregl-inspect:inspect': boolean } };
-type MaplibreGlobal = Pick<typeof import('maplibre-gl'), 'Popup'>;
 
 function isInspectStyle(style: InspectStyleSpecification) {
   return style.metadata && style.metadata['maplibregl-inspect:inspect'];
@@ -129,20 +129,10 @@ class MaplibreInspect implements IControl {
   _map: Map | undefined;
 
   constructor(options: MaplibreInspectOptions = {}) {
-    if (!(this instanceof MaplibreInspect)) {
-      throw new Error('MaplibreInspect needs to be called with the new keyword');
-    }
-
-    let popup = null;
-    const maplibregl = (window as Window & {maplibregl?: MaplibreGlobal}).maplibregl;
-    if (maplibregl) {
-      popup = new maplibregl.Popup({
-        closeButton: false,
-        closeOnClick: false
-      });
-    } else if (!options.popup) {
-      console.error('Maplibre GL JS can not be found. Make sure to include it or pass an initialized MaplibreGL Popup to MaplibreInspect if you are using moduleis.');
-    }
+    const popup = options.popup ?? new Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
 
     this.options = Object.assign({
       showInspectMap: false,

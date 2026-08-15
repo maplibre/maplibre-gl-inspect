@@ -9,6 +9,7 @@ const name = 'maplibre-gl-inspect';
 const config: RollupOptions[] = [
   {
     input: 'index.ts',
+    external: ['maplibre-gl'],
     plugins: [
         commonjs(),
         nodeResolve({browser: true}), 
@@ -20,6 +21,9 @@ const config: RollupOptions[] = [
         format: 'umd',
         sourcemap: true,
         name: 'MaplibreInspect',
+        globals: {
+          'maplibre-gl': 'maplibregl'
+        }
       },
       {
         file: `dist/${name}.mjs`,
@@ -30,6 +34,7 @@ const config: RollupOptions[] = [
   },
   {
     input: 'index.ts',
+    external: ['maplibre-gl'],
     plugins: [dts()],
     output: {
       file: `dist/${name}.d.ts`,

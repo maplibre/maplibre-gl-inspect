@@ -21,8 +21,16 @@ Make sure to include the CSS and JS files.
 <link href='https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.css' rel='stylesheet' />
 <link href='https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/dist/maplibre-gl-inspect.css' rel='stylesheet' />
 
+<script type='importmap'>
+  {
+    "imports": {
+      "maplibre-gl": "https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.mjs"
+    }
+  }
+</script>
+
 <script type='module'>
-  import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.mjs';
+  import * as maplibregl from 'maplibre-gl';
   import MaplibreInspect from 'https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/dist/maplibre-gl-inspect.mjs';
 
   map.addControl(new MaplibreInspect({
