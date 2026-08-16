@@ -1,5 +1,13 @@
 ## main
 ### ✨ Features and improvements
+- _...Add new stuff here..._
+
+### 🐞 Bug fixes
+- _...Add new stuff here..._
+
+- feat: MapLibre GL JS 6 Support ([#441](https://github.com/maplibre/maplibre-gl-inspect/pull/441)) (by [@birkskyum](https://github.com/birkskyum))
+## 1.9.0
+### ✨ Features and improvements
 - Add backwards-compatible support for MapLibre GL JS v6 and its ESM distribution.
 
 ### 🐞 Bug fixes
