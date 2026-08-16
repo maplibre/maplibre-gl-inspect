@@ -8,8 +8,8 @@ export type GeoJSONFeatureWithSourceLayer = MapGeoJSONFeature & { layer: {'sourc
 function displayValue(value: unknown) {
   if (typeof value === 'undefined' || value === null) return value;
   if (value instanceof Date) return value.toLocaleString();
-  if (typeof value === 'object' ||
-          typeof value === 'number' ||
+  if (typeof value === 'object') return JSON.stringify(value);
+  if (typeof value === 'number' ||
           typeof value === 'string') return value.toString();
   return value;
 }

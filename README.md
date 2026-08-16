@@ -5,7 +5,7 @@ Maplibre GL Inspect is a fork of Mapbox GL Inspect by lukasmartinelli ( https://
 Add an inspect control to [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) to view all features
 of the vector sources and allows hovering over features to see their properties.
 
-**Requires [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) (min version 1.15).**
+**Supports [MapLibre GL JS](https://github.com/maplibre/maplibre-gl-js) v3 through v6.**
 
 ![Maplibre GL Inspect Preview](https://cloud.githubusercontent.com/assets/1288339/21744637/11759412-d51a-11e6-9581-f26741fcd182.gif)
 
@@ -15,23 +15,45 @@ of the vector sources and allows hovering over features to see their properties.
 
 Make sure to include the CSS and JS files.
 
-**When using a CDN**
+**When using a CDN with MapLibre GL JS v6**
 
 ```html
-<script src='https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/dist/maplibre-gl-inspect.js'></script>
+<link href='https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.css' rel='stylesheet' />
 <link href='https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/dist/maplibre-gl-inspect.css' rel='stylesheet' />
+
+<script type='importmap'>
+  {
+    "imports": {
+      "maplibre-gl": "https://unpkg.com/maplibre-gl@^6.0.0/dist/maplibre-gl.mjs"
+    }
+  }
+</script>
+
+<script type='module'>
+  import * as maplibregl from 'maplibre-gl';
+  import MaplibreInspect from 'https://unpkg.com/@maplibre/maplibre-gl-inspect@latest/dist/maplibre-gl-inspect.mjs';
+
+  map.addControl(new MaplibreInspect({
+    popup: new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    })
+  }));
+</script>
 ```
+
+The inspect control's UMD build remains available as `dist/maplibre-gl-inspect.js` for classic script usage with MapLibre GL JS v3 through v5.
 
 **When using modules**
 
 ```js
 import '@maplibre/maplibre-gl-inspect/dist/maplibre-gl-inspect.css';
-import maplibregl from 'maplibre-gl';
+import {Popup} from 'maplibre-gl';
 import MaplibreInspect from '@maplibre/maplibre-gl-inspect';
 
 // Pass an initialized popup to Maplibre GL
 map.addControl(new MaplibreInspect({
-  popup: new maplibregl.Popup({
+  popup: new Popup({
     closeButton: false,
     closeOnClick: false
   })
@@ -46,6 +68,8 @@ https://maplibre.org/maplibre-gl-inspect/
 The docs have two main sections - the API and the examples.
 In order to see the examples' code either go to the examples folder in this repo, or press inspect in the browser to see the code.
 It is written in plain html, no extra javascript files in order to have it as simple as possible.
+
+The feature examples use MapLibre GL JS v6. Minimal compatibility examples for v3, v4, and v5 are also included to exercise the classic UMD/global integration.
 
 ## Short Examples
 

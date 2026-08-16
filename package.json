@@ -8,8 +8,8 @@
   "type": "module",
   "scripts": {
     "lint": "eslint lib index.ts",
-    "watch": "rollup --configPlugin @rollup/plugin-typescript -c --watch",
-    "build": "rollup --configPlugin @rollup/plugin-typescript -c",
+    "watch": "rolldown -c --watch",
+    "build": "rolldown -c",
     "build-css": "mkdir -p dist && cp index.css dist/maplibre-gl-inspect.css",
     "build-dist": "npm run build && npm run build-css",
     "start": "st --no-cache -H 0.0.0.0 --port 65432 .",
@@ -41,22 +41,18 @@
     "randomcolor": "^0.6.2"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^29.0.3",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-typescript": "^12.3.0",
     "@types/lodash.isequal": "^4.5.8",
     "@types/randomcolor": "^0.5.9",
     "eslint": "^9.39.2",
-    "maplibre-gl": "^5.24.0",
-    "rollup": "^4.62.4",
-    "rollup-plugin-dts": "^6.4.1",
+    "maplibre-gl": "^6.2.0",
+    "rolldown": "^1.2.4",
+    "rolldown-plugin-dts": "^0.28.2",
     "st": "^4.0.4",
-    "tslib": "^2.8.1",
     "typedoc": "^0.28.20",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.66.0"
   },
   "peerDependencies": {
-    "maplibre-gl": ">3.0.0"
+    "maplibre-gl": ">=3.0.0 <7.0.0"
   }
 }

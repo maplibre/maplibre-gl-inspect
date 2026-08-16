@@ -3,7 +3,8 @@ import stylegen from './stylegen';
 import InspectButton from './InspectButton';
 import renderPopup, { GeoJSONFeatureWithSourceLayer } from './renderPopup';
 import colors from './colors';
-import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, Popup, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
+import {Popup} from 'maplibre-gl';
+import type { IControl, LayerSpecification, Map, MapMouseEvent, MapSourceDataEvent, PointLike, QueryRenderedFeaturesOptions, StyleSpecification } from 'maplibre-gl';
 
 type InspectStyleSpecification = StyleSpecification & { metadata: { 'maplibregl-inspect:inspect': boolean } };
 
@@ -127,20 +128,11 @@ class MaplibreInspect implements IControl {
    */
   _map: Map | undefined;
 
-  constructor(options: MaplibreInspectOptions) {
-    if (!(this instanceof MaplibreInspect)) {
-      throw new Error('MaplibreInspect needs to be called with the new keyword');
-    }
-
-    let popup = null;
-    if (window.maplibregl) {
-      popup = new window.maplibregl.Popup({
-        closeButton: false,
-        closeOnClick: false
-      });
-    } else if (!options.popup) {
-      console.error('Maplibre GL JS can not be found. Make sure to include it or pass an initialized MaplibreGL Popup to MaplibreInspect if you are using moduleis.');
-    }
+  constructor(options: MaplibreInspectOptions = {}) {
+    const popup = options.popup ?? new Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
 
     this.options = Object.assign({
       showInspectMap: false,
@@ -340,7 +332,6 @@ class MaplibreInspect implements IControl {
     // if sources have already been passed as options
     // we do not need to figure out the sources ourselves
     if (Object.keys(this.sources).length === 0) {
-      map.on('tiledata', this._onSourceChange);
       map.on('sourcedata', this._onSourceChange);
     }
 
@@ -356,7 +347,6 @@ class MaplibreInspect implements IControl {
   public onRemove() {
     this._map!.off('styledata', this._onStyleChange);
     this._map!.off('load', this._onStyleChange);
-    this._map!.off('tiledata', this._onSourceChange);
     this._map!.off('sourcedata', this._onSourceChange);
     this._map!.off('mousemove', this._onMousemove);
     this._map!.off('click', this._onMousemove);
