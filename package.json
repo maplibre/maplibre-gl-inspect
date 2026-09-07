@@ -47,7 +47,7 @@
     "maplibre-gl": "^6.6.0",
     "rolldown": "^1.2.6",
     "rolldown-plugin-dts": "^0.28.2",
-    "st": "^4.0.4",
+    "st": "^4.0.10",
     "typedoc": "^0.28.20",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.68.0"
